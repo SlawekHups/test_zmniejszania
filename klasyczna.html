@@ -1015,7 +1015,7 @@
 
         // Sprawdź dostępność PHP przy ładowaniu strony
         window.addEventListener('load', () => {
-            fetch('check.php')
+            fetch('check.php?legacy=1')
             .then(response => response.json())
             .then(data => {
                 if (!data.gd_available) {

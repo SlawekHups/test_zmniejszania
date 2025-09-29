@@ -400,7 +400,7 @@
             const statusElement = document.getElementById('serverStatus');
             
             try {
-                const response = await fetch('check.php');
+                const response = await fetch('check.php?legacy=1');
                 const data = await response.json();
                 
                 if (data.gd_available && data.exif_available) {

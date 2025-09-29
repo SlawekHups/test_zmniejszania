@@ -332,38 +332,39 @@ function getSystemDiagnostics() {
 $diagnostics = getSystemDiagnostics();
 $tests = $run_tests ? runFunctionalityTests() : [];
 
-// Obsługa różnych formatów
-if ($is_api) {
-    // JSON API - nowy format
-    echo json_encode([
-        'diagnostics' => $diagnostics,
-        'tests' => $tests
-    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-} elseif (isset($_GET['legacy']) && $_GET['legacy'] === '1') {
-    // Stary format JSON dla kompatybilności wstecznej
-    header('Content-Type: application/json; charset=utf-8');
-    $legacy_format = [
-        'php_version' => $diagnostics['server_info']['php_version'],
-        'gd_available' => $diagnostics['extensions']['gd']['loaded'],
-        'exif_available' => $diagnostics['extensions']['exif']['loaded'],
-        'zip_available' => $diagnostics['extensions']['zip']['loaded'],
-        'upload_max_filesize' => ini_get('upload_max_filesize'),
-        'post_max_size' => ini_get('post_max_size'),
-        'max_file_uploads' => (int)ini_get('max_file_uploads'),
-        'max_input_vars' => (int)ini_get('max_input_vars'),
-        'max_execution_time' => ini_get('max_execution_time'),
-        'memory_limit' => ini_get('memory_limit'),
-        'temp_dir_writable' => $diagnostics['directories']['temp']['writable'],
-        'gd_version' => $diagnostics['gd_details']['version'] ?? 'Unknown',
-        'jpeg_support' => $diagnostics['gd_details']['jpeg_support'] ?? false,
-        'working_dirs' => [
-            'temp_accessible' => $diagnostics['directories']['temp']['exists'],
-            'temp_writable' => $diagnostics['directories']['temp']['writable']
-        ]
-    ];
-    echo json_encode($legacy_format, JSON_PRETTY_PRINT);
+// Dla kompatybilności wstecznej - jeśli nie ma parametrów, zwróć podstawowe JSON
+if ($is_api || (!isset($_GET['format']) && !isset($_GET['test']) && empty($_GET))) {
+    // Stary format dla kompatybilności
+    if (empty($_GET)) {
+        $legacy_format = [
+            'php_version' => $diagnostics['server_info']['php_version'],
+            'gd_available' => $diagnostics['extensions']['gd']['loaded'],
+            'exif_available' => $diagnostics['extensions']['exif']['loaded'],
+            'zip_available' => $diagnostics['extensions']['zip']['loaded'],
+            'upload_max_filesize' => ini_get('upload_max_filesize'),
+            'post_max_size' => ini_get('post_max_size'),
+            'max_file_uploads' => (int)ini_get('max_file_uploads'),
+            'max_input_vars' => (int)ini_get('max_input_vars'),
+            'max_execution_time' => ini_get('max_execution_time'),
+            'memory_limit' => ini_get('memory_limit'),
+            'temp_dir_writable' => $diagnostics['directories']['temp']['writable'],
+            'gd_version' => $diagnostics['gd_details']['version'] ?? 'Unknown',
+            'jpeg_support' => $diagnostics['gd_details']['jpeg_support'] ?? false,
+            'working_dirs' => [
+                'temp_accessible' => $diagnostics['directories']['temp']['exists'],
+                'temp_writable' => $diagnostics['directories']['temp']['writable']
+            ]
+        ];
+        echo json_encode($legacy_format, JSON_PRETTY_PRINT);
+    } else {
+        // Nowy format JSON
+        echo json_encode([
+            'diagnostics' => $diagnostics,
+            'tests' => $tests
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
 } else {
-    // HTML Dashboard - domyślny widok
+    // HTML Dashboard
     ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -506,7 +507,6 @@ if ($is_api) {
             <a href="check.php" class="active">🔧 Diagnostyka</a>
             <a href="check.php?test=1">🧪 Uruchom testy</a>
             <a href="check.php?format=json">📄 JSON API</a>
-            <a href="check.php?legacy=1">📋 Stary format</a>
         </div>
 
         <?php
