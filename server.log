@@ -144,3 +144,145 @@
 [Mon Sep 29 13:51:11 2025] 127.0.0.1:50628 Accepted
 [Mon Sep 29 13:51:11 2025] 127.0.0.1:50628 [200]: GET /progressive_simple_fix.html
 [Mon Sep 29 13:51:11 2025] 127.0.0.1:50628 Closing
+[Mon Sep 29 13:56:47 2025] 127.0.0.1:50731 Accepted
+[Mon Sep 29 13:56:47 2025] 127.0.0.1:50733 Accepted
+[Mon Sep 29 13:56:47 2025] 127.0.0.1:50731 [200]: GET /
+[Mon Sep 29 13:56:47 2025] 127.0.0.1:50731 Closing
+[Mon Sep 29 13:56:47 2025] 127.0.0.1:50736 Accepted
+[Mon Sep 29 13:56:47 2025] 127.0.0.1:50733 Closing
+[Mon Sep 29 13:56:47 2025] 127.0.0.1:50736 [200]: GET /check.php
+[Mon Sep 29 13:56:47 2025] 127.0.0.1:50736 Closing
+[Mon Sep 29 13:56:49 2025] 127.0.0.1:50742 Accepted
+[Mon Sep 29 13:56:49 2025] 127.0.0.1:50742 [200]: GET /klasyczna.html
+[Mon Sep 29 13:56:49 2025] 127.0.0.1:50742 Closing
+[Mon Sep 29 13:56:49 2025] 127.0.0.1:50745 Accepted
+[Mon Sep 29 13:56:49 2025] 127.0.0.1:50746 Accepted
+[Mon Sep 29 13:56:49 2025] 127.0.0.1:50745 Closing
+[Mon Sep 29 13:56:49 2025] 127.0.0.1:50746 [200]: GET /check.php
+[Mon Sep 29 13:56:49 2025] 127.0.0.1:50746 Closing
+[Mon Sep 29 13:57:00 2025] 127.0.0.1:50757 Accepted
+[Mon Sep 29 13:57:00 2025] 127.0.0.1:50757 [200]: POST /validate_capacity.php
+[Mon Sep 29 13:57:00 2025] 127.0.0.1:50757 Closing
+[Mon Sep 29 13:57:01 2025] 127.0.0.1:50759 Accepted
+[Mon Sep 29 13:57:04 2025] 127.0.0.1:50759 [200]: POST /process.php
+[Mon Sep 29 13:57:04 2025] 127.0.0.1:50759 Closing
+[Mon Sep 29 13:58:04 2025] 127.0.0.1:50788 Accepted
+[Mon Sep 29 13:58:04 2025] 127.0.0.1:50788 [200]: GET /klasyczna.html
+[Mon Sep 29 13:58:04 2025] 127.0.0.1:50788 Closing
+[Mon Sep 29 13:58:10 2025] 127.0.0.1:50797 Accepted
+[Mon Sep 29 13:58:10 2025] 127.0.0.1:50797 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 13:58:10 2025] 127.0.0.1:50797 Closing
+[Mon Sep 29 13:58:37 2025] 127.0.0.1:50815 Accepted
+[Mon Sep 29 13:58:37 2025] 127.0.0.1:50815 [200]: GET /klasyczna.html
+[Mon Sep 29 13:58:37 2025] 127.0.0.1:50815 Closing
+[Mon Sep 29 13:58:37 2025] 127.0.0.1:50817 Accepted
+[Mon Sep 29 13:58:37 2025] 127.0.0.1:50820 Accepted
+[Mon Sep 29 13:58:37 2025] 127.0.0.1:50817 Closing
+[Mon Sep 29 13:58:37 2025] 127.0.0.1:50820 [200]: GET /check.php
+[Mon Sep 29 13:58:37 2025] 127.0.0.1:50820 Closing
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50827 Accepted
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50827 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50827 Closing
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50830 Accepted
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50831 Accepted
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50830 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50830 Closing
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50831 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50831 Closing
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50833 Accepted
+[Mon Sep 29 13:58:39 2025] 127.0.0.1:50833 Closing
+[Mon Sep 29 13:58:47 2025] 127.0.0.1:50841 Accepted
+[Mon Sep 29 13:58:47 2025] 127.0.0.1:50841 [200]: POST /validate_capacity.php
+[Mon Sep 29 13:58:47 2025] 127.0.0.1:50841 Closing
+[Mon Sep 29 13:58:49 2025] 127.0.0.1:50843 Accepted
+[Mon Sep 29 13:59:18 2025] 127.0.0.1:50843 [200]: POST /process.php
+[Mon Sep 29 13:59:18 2025] 127.0.0.1:50843 Closing
+[Mon Sep 29 13:59:34 2025] 127.0.0.1:50856 Accepted
+[Mon Sep 29 13:59:34 2025] 127.0.0.1:50856 [200]: POST /validate_capacity.php
+[Mon Sep 29 13:59:34 2025] 127.0.0.1:50856 Closing
+[Mon Sep 29 13:59:35 2025] 127.0.0.1:50858 Accepted
+[Mon Sep 29 13:59:35 2025] 127.0.0.1:50858 [200]: POST /process.php
+[Mon Sep 29 13:59:35 2025] 127.0.0.1:50858 Closing
+[Mon Sep 29 13:59:44 2025] 127.0.0.1:50860 Accepted
+[Mon Sep 29 13:59:44 2025] 127.0.0.1:50860 [200]: GET /klasyczna.html
+[Mon Sep 29 13:59:44 2025] 127.0.0.1:50860 Closing
+[Mon Sep 29 13:59:44 2025] 127.0.0.1:50862 Accepted
+[Mon Sep 29 13:59:44 2025] 127.0.0.1:50864 Accepted
+[Mon Sep 29 13:59:44 2025] 127.0.0.1:50862 Closing
+[Mon Sep 29 13:59:44 2025] 127.0.0.1:50864 [200]: GET /check.php
+[Mon Sep 29 13:59:44 2025] 127.0.0.1:50864 Closing
+[Mon Sep 29 13:59:45 2025] 127.0.0.1:50870 Accepted
+[Mon Sep 29 13:59:45 2025] 127.0.0.1:50870 [200]: GET /
+[Mon Sep 29 13:59:45 2025] 127.0.0.1:50872 Accepted
+[Mon Sep 29 13:59:45 2025] 127.0.0.1:50870 Closing
+[Mon Sep 29 13:59:45 2025] 127.0.0.1:50872 Closing
+[Mon Sep 29 13:59:45 2025] 127.0.0.1:50874 Accepted
+[Mon Sep 29 13:59:45 2025] 127.0.0.1:50874 [200]: GET /check.php
+[Mon Sep 29 13:59:45 2025] 127.0.0.1:50874 Closing
+[Mon Sep 29 13:59:48 2025] 127.0.0.1:50876 Accepted
+[Mon Sep 29 13:59:48 2025] 127.0.0.1:50876 [200]: GET /klasyczna.html
+[Mon Sep 29 13:59:48 2025] 127.0.0.1:50876 Closing
+[Mon Sep 29 13:59:48 2025] 127.0.0.1:50879 Accepted
+[Mon Sep 29 13:59:48 2025] 127.0.0.1:50880 Accepted
+[Mon Sep 29 13:59:48 2025] 127.0.0.1:50879 Closing
+[Mon Sep 29 13:59:48 2025] 127.0.0.1:50880 [200]: GET /check.php
+[Mon Sep 29 13:59:48 2025] 127.0.0.1:50880 Closing
+[Mon Sep 29 13:59:53 2025] 127.0.0.1:50901 Accepted
+[Mon Sep 29 13:59:53 2025] 127.0.0.1:50901 [200]: POST /validate_capacity.php
+[Mon Sep 29 13:59:53 2025] 127.0.0.1:50901 Closing
+[Mon Sep 29 13:59:54 2025] 127.0.0.1:50906 Accepted
+[Mon Sep 29 13:59:55 2025] 127.0.0.1:50906 [200]: POST /process.php
+[Mon Sep 29 13:59:55 2025] 127.0.0.1:50906 Closing
+[Mon Sep 29 13:59:58 2025] 127.0.0.1:50910 Accepted
+[Mon Sep 29 13:59:58 2025] 127.0.0.1:50910 [200]: GET /download.php?session=img_68da74bb0244f3.93802639&zip=1
+[Mon Sep 29 13:59:58 2025] 127.0.0.1:50910 Closing
+[Mon Sep 29 13:59:58 2025] 127.0.0.1:50912 Accepted
+[Mon Sep 29 13:59:59 2025] 127.0.0.1:50912 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 13:59:59 2025] 127.0.0.1:50912 Closing
+[Mon Sep 29 14:00:19 2025] 127.0.0.1:50926 Accepted
+[Mon Sep 29 14:00:19 2025] 127.0.0.1:50926 [200]: POST /validate_capacity.php
+[Mon Sep 29 14:00:19 2025] 127.0.0.1:50926 Closing
+[Mon Sep 29 14:00:20 2025] 127.0.0.1:50928 Accepted
+[Mon Sep 29 14:00:20 2025] 127.0.0.1:50928 [200]: POST /process.php
+[Mon Sep 29 14:00:20 2025] 127.0.0.1:50928 Closing
+[Mon Sep 29 14:00:35 2025] 127.0.0.1:50930 Accepted
+[Mon Sep 29 14:00:35 2025] 127.0.0.1:50930 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 14:00:35 2025] 127.0.0.1:50932 Accepted
+[Mon Sep 29 14:00:35 2025] 127.0.0.1:50930 Closing
+[Mon Sep 29 14:00:35 2025] 127.0.0.1:50932 Closing
+[Mon Sep 29 14:00:45 2025] 127.0.0.1:50944 Accepted
+[Mon Sep 29 14:00:45 2025] 127.0.0.1:50944 [200]: POST /validate_capacity.php
+[Mon Sep 29 14:00:45 2025] 127.0.0.1:50944 Closing
+[Mon Sep 29 14:00:46 2025] 127.0.0.1:50946 Accepted
+[Mon Sep 29 14:00:47 2025] 127.0.0.1:50946 [200]: POST /process.php
+[Mon Sep 29 14:00:47 2025] 127.0.0.1:50946 Closing
+[Mon Sep 29 14:01:02 2025] 127.0.0.1:50957 Accepted
+[Mon Sep 29 14:01:02 2025] 127.0.0.1:50957 [200]: POST /validate_capacity.php
+[Mon Sep 29 14:01:02 2025] 127.0.0.1:50957 Closing
+[Mon Sep 29 14:01:03 2025] 127.0.0.1:50959 Accepted
+[Mon Sep 29 14:01:03 2025] 127.0.0.1:50959 [200]: POST /process.php
+[Mon Sep 29 14:01:03 2025] 127.0.0.1:50959 Closing
+[Mon Sep 29 14:01:07 2025] 127.0.0.1:50961 Accepted
+[Mon Sep 29 14:01:08 2025] 127.0.0.1:50961 [200]: GET /download.php?session=img_68da74ff603d89.14793068&zip=1
+[Mon Sep 29 14:01:08 2025] 127.0.0.1:50961 Closing
+[Mon Sep 29 14:01:08 2025] 127.0.0.1:50963 Accepted
+[Mon Sep 29 14:01:30 2025] 127.0.0.1:50963 [200]: POST /validate_capacity.php
+[Mon Sep 29 14:01:30 2025] 127.0.0.1:50963 Closing
+[Mon Sep 29 14:01:32 2025] 127.0.0.1:50980 Accepted
+[Mon Sep 29 14:01:32 2025] 127.0.0.1:50980 [200]: POST /process.php
+[Mon Sep 29 14:01:32 2025] 127.0.0.1:50980 Closing
+[Mon Sep 29 14:01:32 2025] 127.0.0.1:50982 Accepted
+[Mon Sep 29 14:01:33 2025] 127.0.0.1:50982 [200]: POST /process.php
+[Mon Sep 29 14:01:33 2025] 127.0.0.1:50982 Closing
+[Mon Sep 29 14:01:33 2025] 127.0.0.1:50984 Accepted
+[Mon Sep 29 14:01:33 2025] 127.0.0.1:50984 [200]: POST /process.php
+[Mon Sep 29 14:01:33 2025] 127.0.0.1:50984 Closing
+[Mon Sep 29 14:01:36 2025] 127.0.0.1:50986 Accepted
+[Mon Sep 29 14:01:36 2025] 127.0.0.1:50986 [200]: POST /create_combined_zip.php
+[Mon Sep 29 14:01:36 2025] 127.0.0.1:50986 Closing
+[Mon Sep 29 14:01:40 2025] 127.0.0.1:50988 Accepted
+[Mon Sep 29 14:01:40 2025] 127.0.0.1:50988 [200]: GET /download.php?session=combined_68da7520cfd862.82872630&zip=1
+[Mon Sep 29 14:01:40 2025] 127.0.0.1:50988 Closing
+[Mon Sep 29 14:01:40 2025] 127.0.0.1:50990 Accepted
+[Mon Sep 29 14:05:45 2025] 127.0.0.1:50990 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 14:05:45 2025] 127.0.0.1:50990 Closing

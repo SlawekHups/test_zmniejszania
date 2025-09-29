@@ -278,9 +278,10 @@
         .progress-bar {
             background: #eee;
             border-radius: 10px;
-            height: 20px;
+            height: 25px;
             overflow: hidden;
             margin-bottom: 15px;
+            position: relative;
         }
 
         .progress-fill {
@@ -291,10 +292,22 @@
             border-radius: 10px;
         }
 
+        .progress-percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #333;
+            font-weight: bold;
+            font-size: 12px;
+            z-index: 10;
+        }
+
         .progress-text {
             text-align: center;
             color: #666;
             font-weight: bold;
+            margin-top: 5px;
         }
 
         .results-section {
@@ -505,6 +518,7 @@
                 <h3>⏳ Postęp przetwarzania:</h3>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
+                    <div class="progress-percentage" id="progressPercentage">0%</div>
                 </div>
                 <div class="progress-text" id="progressText">Przygotowywanie...</div>
             </div>
@@ -834,27 +848,92 @@
             document.getElementById('progressSection').classList.add('show');
             document.getElementById('processBtn').disabled = true;
             
-            // Pokaż nieokreślony pasek postępu
+            // Inicjalizuj elementy postępu
             const progressFill = document.getElementById('progressFill');
             const progressText = document.getElementById('progressText');
+            const progressPercentage = document.getElementById('progressPercentage');
             
-            progressFill.style.width = '100%';
-            progressFill.style.background = 'linear-gradient(90deg, #4facfe 0%, #00f2fe 50%, #4facfe 100%)';
-            progressFill.style.animation = 'pulse 1.5s ease-in-out infinite';
-            progressText.textContent = 'Przetwarzanie zdjęć...';
+            // Zresetuj stan
+            progressFill.style.width = '0%';
+            progressFill.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+            progressFill.style.animation = '';
+            progressPercentage.textContent = '0%';
+            progressText.textContent = 'Rozpoczynanie przetwarzania...';
+            
+            // Symuluj postęp w oparciu o liczbę plików
+            simulateProgress();
+        }
+
+        function simulateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const progressPercentage = document.getElementById('progressPercentage');
+            const fileCount = selectedFiles.length;
+            
+            let currentProgress = 0;
+            const maxProgress = 95; // Nie dochodzimy do 100% żeby pokazać że się jeszcze przetwarza
+            const stepTime = Math.max(100, (15000 / fileCount)); // Rozłóż na ~15 sekund
+            
+            const progressInterval = setInterval(() => {
+                if (currentProgress < maxProgress) {
+                    currentProgress += Math.random() * 3 + 1; // Losowy przyrost 1-4%
+                    if (currentProgress > maxProgress) currentProgress = maxProgress;
+                    
+                    progressFill.style.width = currentProgress + '%';
+                    progressPercentage.textContent = Math.round(currentProgress) + '%';
+                    
+                    // Aktualizuj tekst w zależności od postępu
+                    if (currentProgress < 25) {
+                        progressText.textContent = 'Przygotowywanie plików...';
+                    } else if (currentProgress < 50) {
+                        progressText.textContent = 'Zmniejszanie zdjęć...';
+                    } else if (currentProgress < 75) {
+                        progressText.textContent = 'Optymalizacja jakości...';
+                    } else if (currentProgress < 90) {
+                        progressText.textContent = 'Zapisywanie wyników...';
+                    } else {
+                        progressText.textContent = 'Finalizowanie...';
+                    }
+                } else {
+                    clearInterval(progressInterval);
+                    // Nie czyść postępu - zostanie wyczyszczony przez hideProgress()
+                }
+            }, stepTime);
+            
+            // Zapisz interval ID do późniejszego wyczyszczenia
+            window.progressInterval = progressInterval;
         }
 
         // Funkcja checkJobStatus usunięta - nie jest potrzebna dla szybkich operacji
 
         function hideProgress() {
-            document.getElementById('progressSection').classList.remove('show');
-            document.getElementById('processBtn').disabled = false;
+            // Wyczyść interval symulacji postępu
+            if (window.progressInterval) {
+                clearInterval(window.progressInterval);
+                window.progressInterval = null;
+            }
             
-            // Reset progress bar styles
+            // Pokaż 100% na chwilę przed ukryciem
             const progressFill = document.getElementById('progressFill');
-            progressFill.style.width = '0%';
-            progressFill.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
-            progressFill.style.animation = '';
+            const progressPercentage = document.getElementById('progressPercentage');
+            const progressText = document.getElementById('progressText');
+            
+            progressFill.style.width = '100%';
+            progressPercentage.textContent = '100%';
+            progressText.textContent = 'Zakończone!';
+            
+            // Po chwili ukryj progress i zresetuj
+            setTimeout(() => {
+                document.getElementById('progressSection').classList.remove('show');
+                document.getElementById('processBtn').disabled = false;
+                
+                // Reset progress bar styles
+                progressFill.style.width = '0%';
+                progressFill.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+                progressFill.style.animation = '';
+                progressPercentage.textContent = '0%';
+                progressText.textContent = 'Przygotowywanie...';
+            }, 1000);
         }
 
         function showResults(data) {

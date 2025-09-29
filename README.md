@@ -9,10 +9,12 @@ Nowoczesna aplikacja webowa do konwersji, zmniejszania i optymalizacji zdjęć J
 - **Inteligentne zmniejszanie**: Zachowanie proporcji do maksymalnego rozmiaru
 - **Zarządzanie datami**: Sortowanie według dat EXIF lub modyfikacji pliku
 - **Auto-rotacja**: Automatyczna korekcja orientacji według EXIF
-- **Wsadowe przetwarzanie**: Obsługa wielu plików jednocześnie (do 250 plików)
+- **Wsadowe przetwarzanie**: Obsługa wielu plików jednocześnie (do 300 plików)
 - **Progressive JPEG**: Optymalizacja dla szybszego ładowania w przeglądarce
 - **Walidacja pojemności**: Sprawdzanie limitów przed przetwarzaniem
 - **Progresywne przetwarzanie**: Real-time feedback i combined ZIP
+- **Strona startowa**: Intuicyjna nawigacja między wersjami aplikacji
+- **Paski postępu z procentami**: Dokładny monitoring przetwarzania w czasie rzeczywistym
 
 ### 🔧 Zaawansowane opcje
 - **Konfigurowalna jakość**: 50-100% kompresji JPEG
@@ -39,9 +41,10 @@ Nowoczesna aplikacja webowa do konwersji, zmniejszania i optymalizacji zdjęć J
    ./start.sh
    ```
 3. Otwórz aplikację w przeglądarce:
-   - **Klasyczna**: http://localhost:8000/index.html
-   - **Progresywna**: http://localhost:8000/progressive_simple_fix.html
-   - **Diagnostyka**: http://localhost:8000/check.php
+   - **🏠 Strona główna**: http://localhost:8000/
+   - **📱 Klasyczna**: http://localhost:8000/klasyczna.html
+   - **⚡ Progresywna**: http://localhost:8000/progressive_simple_fix.html
+   - **🔧 Diagnostyka**: http://localhost:8000/check.php
 
 ### Automatyczna konfiguracja
 Skrypt `start.sh` automatycznie:
@@ -55,7 +58,7 @@ Skrypt `start.sh` automatycznie:
 ### Krok 1: Wybór zdjęć
 - Przeciągnij pliki do obszaru uploadu lub kliknij "Wybierz zdjęcia"
 - Obsługiwane formaty: JPG, JPEG (do 100MB na plik)
-- Możesz wybrać wiele plików jednocześnie (do 250 plików)
+- Możesz wybrać wiele plików jednocześnie (do 300 plików)
 
 ### Krok 2: Walidacja pojemności (Automatyczna)
 System automatycznie sprawdza:
@@ -98,9 +101,38 @@ Kliknij "⚙️ Ustawienia zaawansowane" aby dostosować:
 - **"Po partiach"**: Real-time feedback, combined ZIP (zalecane dla 50+ plików)
 
 ### Krok 5: Przetwarzanie i pobieranie
-- Obserwuj postęp w czasie rzeczywistym
-- Pobierz pojedyncze pliki lub całe archiwum ZIP
-- Pliki sortowane według daty EXIF (od najstarszego do najnowszego)
+- **Obserwuj postęp w czasie rzeczywistym** z dokładnymi procentami
+- **Pobierz pojedyncze pliki** lub całe archiwum ZIP
+- **Pliki sortowane** według daty EXIF (od najstarszego do najnowszego)
+- **Komunikaty statusu** opisujące aktualny etap przetwarzania
+
+## 🏠 Strona startowa i nawigacja
+
+### 🎯 Centralne miejsce dostępu
+Nowa strona główna (`index.html`) zapewnia:
+- **🚀 Łatwy wybór wersji** - elegancki design z opisem każdej wersji
+- **📊 Status serwera** - sprawdzanie konfiguracji w czasie rzeczywistym
+- **🔗 Intuicyjna nawigacja** - przyciski do wszystkich narzędzi
+- **📱 Responsywny design** - działa na wszystkich urządzeniach
+
+### 📊 Paski postępu z procentami
+Obie wersje aplikacji zostały wzbogacone o:
+
+**📱 Wersja klasyczna:**
+- **Symulowany postęp** dostosowany do liczby plików
+- **Dokładne procenty** (0% → 95% → 100%)
+- **Inteligentne komunikaty** zmieniające się z postępem:
+  - 0-25%: "Przygotowywanie plików..."
+  - 25-50%: "Zmniejszanie zdjęć..."
+  - 50-75%: "Optymalizacja jakości..."
+  - 75-90%: "Zapisywanie wyników..."
+  - 90%+: "Finalizowanie..."
+
+**⚡ Wersja progresywna:**
+- **Rzeczywisty postęp** na podstawie przetworzonych plików
+- **Procenty w czasie rzeczywistym** na głównym pasku
+- **Synchronizacja ze statystykami** plików
+- **Dokładne obliczenia** (przetworzone/wszystkie × 100%)
 
 ## 🎯 Najważniejsze cechy
 
@@ -134,8 +166,9 @@ Przed każdym przetwarzaniem system sprawdza:
 ## 📁 Struktura projektu
 
 ### 🌐 Interfejsy użytkownika
-- **`index.html`** - Klasyczny interfejs z walidacją pojemności
-- **`progressive_simple_fix.html`** - Progresywny interfejs (tryb "wszystkie naraz" + "po partiach")
+- **`index.html`** - Strona startowa z wyborem wersji i nawigacją
+- **`klasyczna.html`** - Klasyczny interfejs z walidacją pojemności i paskami postępu
+- **`progressive_simple_fix.html`** - Progresywny interfejs z trybami przetwarzania
 
 ### ⚙️ Backend API
 - **`process.php`** - Główny procesor obrazów (konwersja + resize)
@@ -163,19 +196,20 @@ Przed każdym przetwarzaniem system sprawdza:
 ### Limity PHP (Ustawiane automatycznie)
 ```php
 'upload_max_filesize' => '100M',    // Maksymalny rozmiar pliku
-'post_max_size' => '5000M',         // Maksymalny rozmiar POST (50×100MB)
-'max_file_uploads' => '250',        // Maksymalna liczba plików
-'max_input_vars' => '5000',         // Maksymalna liczba zmiennych
-'max_execution_time' => '900',      // 15 minut na przetwarzanie
-'memory_limit' => '2048M',          // 2GB pamięci
-'max_input_time' => '900',          // 15 minut na upload
+'post_max_size' => '8000M',         // Maksymalny rozmiar POST (80×100MB)
+'max_file_uploads' => '350',        // Maksymalna liczba plików
+'max_input_vars' => '8000',         // Maksymalna liczba zmiennych
+'max_execution_time' => '1200',     // 20 minut na przetwarzanie
+'memory_limit' => '4096M',          // 4GB pamięci
+'max_input_time' => '1200',         // 20 minut na upload
 ```
 
 ### Zalecane limity przetwarzania
 - **1-10 plików**: Optymalne (szybkie przetwarzanie)
 - **11-50 plików**: Dobre (średni czas przetwarzania)
 - **51-200 plików**: Możliwe (długie przetwarzanie - użyj trybu progresywnego)
-- **200+ plików**: Ekstremalne (wymaga progresywnego przetwarzania po partiach)
+- **201-300 plików**: Duże partie (zalecany tryb progresywny po partiach)
+- **300+ plików**: Ekstremalne (podziel na mniejsze partie)
 
 ## 🔍 Diagnostyka i rozwiązywanie problemów
 
@@ -243,6 +277,9 @@ sudo systemctl restart apache2
 ✅ Archiwizacja wyników  
 ✅ Walidacja pojemności przed przetwarzaniem  
 ✅ Progresywne przetwarzanie z real-time feedback  
+✅ Strona startowa z intuicyjną nawigacją  
+✅ Paski postępu z dokładnymi procentami  
+✅ Zwiększone limity do 300 plików jednocześnie  
 
 ## 🧪 API i testowanie
 
@@ -284,8 +321,8 @@ Logi są dostępne w odpowiedzi JSON z `process.php` i w plikach `.log`.
 
 ## 📊 Statystyki projektu
 
-### ✅ Zachowane pliki (20 plików + 4 katalogi)
-- 2 interfejsy HTML
+### ✅ Zachowane pliki (21 plików + 4 katalogi)
+- 3 interfejsy HTML (strona startowa + 2 wersje aplikacji)
 - 6 skryptów PHP (backend)
 - 4 pliki konfiguracji/narzędzi
 - 4 pliki dokumentacji
@@ -322,7 +359,28 @@ Wszystkie niepotrzebne pliki zostały usunięte. Projekt jest teraz:
 
 🎉 **Można bezpiecznie używać w produkcji!**
 
-**Wersja**: 3.0  
+**Wersja**: 3.1  
 **Autor**: Twój Zespół  
 **Licencja**: MIT  
 **Wsparcie**: [GitHub Issues](https://github.com/your-repo/issues)
+
+---
+
+## 🆕 Changelog v3.1
+
+### ✨ Nowe funkcje:
+- **🏠 Strona startowa** - intuicyjna nawigacja między wersjami
+- **📊 Paski postępu z procentami** - dokładny monitoring w obu wersjach
+- **🔗 Przyciski nawigacji** - łatwe przechodzenie między wersjami
+- **⚡ Zwiększone limity** - do 300 plików jednocześnie (4GB RAM)
+
+### 🛠️ Poprawki:
+- **Naprawiony bug podwójnego kliknięcia** przy dodawaniu zdjęć
+- **Ulepszone paski postępu** - większe, czytelniejsze z procentami
+- **Zwiększona pamięć** - z 2GB do 4GB dla większych partii
+- **Wydłużony czas** - z 15 do 20 minut na przetwarzanie
+
+### 🎯 Ulepszona użyteczność:
+- **Nie trzeba pamiętać linków** - wszystko dostępne z strony głównej
+- **Jasny feedback** - komunikaty opisujące etapy przetwarzania
+- **Responsywny design** - działa na wszystkich urządzeniach
