@@ -1,0 +1,237 @@
+[Mon Sep 29 11:46:11 2025] PHP 8.3.25 Development Server (http://localhost:8000) started
+[Mon Sep 29 11:46:14 2025] 127.0.0.1:49472 Accepted
+[Mon Sep 29 11:46:14 2025] 127.0.0.1:49472 [200]: GET /check.php
+[Mon Sep 29 11:46:14 2025] 127.0.0.1:49472 Closing
+[Mon Sep 29 11:46:17 2025] 127.0.0.1:49474 Accepted
+[Mon Sep 29 11:46:17 2025] 127.0.0.1:49474 Closing
+[Mon Sep 29 11:46:17 2025] 127.0.0.1:49477 Accepted
+[Mon Sep 29 11:46:17 2025] 127.0.0.1:49478 Accepted
+[Mon Sep 29 11:46:17 2025] 127.0.0.1:49477 Closing
+[Mon Sep 29 11:46:17 2025] 127.0.0.1:49478 Closing
+[Mon Sep 29 11:46:21 2025] 127.0.0.1:49483 Accepted
+[Mon Sep 29 11:46:21 2025] 127.0.0.1:49483 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 11:46:21 2025] 127.0.0.1:49483 Closing
+[Mon Sep 29 11:46:21 2025] 127.0.0.1:49485 Accepted
+[Mon Sep 29 11:46:22 2025] 127.0.0.1:49485 Closing
+[Mon Sep 29 11:46:23 2025] 127.0.0.1:49487 Accepted
+[Mon Sep 29 11:46:23 2025] 127.0.0.1:49487 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 11:46:23 2025] 127.0.0.1:49487 Closing
+[Mon Sep 29 11:46:24 2025] 127.0.0.1:49489 Accepted
+[Mon Sep 29 11:46:24 2025] 127.0.0.1:49491 Accepted
+[Mon Sep 29 11:46:24 2025] 127.0.0.1:49489 Closing
+[Mon Sep 29 11:47:25 2025] 127.0.0.1:49497 Accepted
+[Mon Sep 29 11:47:25 2025] 127.0.0.1:49491 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 11:47:25 2025] 127.0.0.1:49491 Closing
+[Mon Sep 29 11:47:25 2025] 127.0.0.1:49497 [200]: POST /validate_capacity.php
+[Mon Sep 29 11:47:25 2025] 127.0.0.1:49497 Closing
+[Mon Sep 29 11:47:26 2025] 127.0.0.1:49500 Accepted
+[Mon Sep 29 11:47:28 2025] 127.0.0.1:49500 [200]: POST /process.php
+[Mon Sep 29 11:47:28 2025] 127.0.0.1:49500 Closing
+[Mon Sep 29 11:47:46 2025] 127.0.0.1:49502 Accepted
+[Mon Sep 29 11:47:46 2025] 127.0.0.1:49502 Closing
+[Mon Sep 29 11:47:46 2025] 127.0.0.1:49504 Accepted
+[Mon Sep 29 11:47:46 2025] 127.0.0.1:49506 Accepted
+[Mon Sep 29 11:47:46 2025] 127.0.0.1:49504 Closing
+[Mon Sep 29 11:48:08 2025] 127.0.0.1:49506 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 11:48:08 2025] 127.0.0.1:49506 Closing
+[Mon Sep 29 11:49:27 2025] 127.0.0.1:49514 Accepted
+[Mon Sep 29 11:49:27 2025] 127.0.0.1:49514 Closing
+[Mon Sep 29 11:49:27 2025] 127.0.0.1:49516 Accepted
+[Mon Sep 29 11:49:28 2025] 127.0.0.1:49516 Closing
+[Mon Sep 29 11:49:37 2025] 127.0.0.1:49524 Accepted
+[Mon Sep 29 11:49:37 2025] 127.0.0.1:49525 Accepted
+[Mon Sep 29 11:49:37 2025] 127.0.0.1:49524 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 11:49:37 2025] 127.0.0.1:49524 Closing
+[Mon Sep 29 11:49:37 2025] 127.0.0.1:49525 Closing
+[Mon Sep 29 11:49:41 2025] 127.0.0.1:49527 Accepted
+[Mon Sep 29 11:49:41 2025] 127.0.0.1:49527 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 11:49:41 2025] 127.0.0.1:49527 Closing
+[Mon Sep 29 11:49:41 2025] 127.0.0.1:49530 Accepted
+[Mon Sep 29 11:49:41 2025] 127.0.0.1:49531 Accepted
+[Mon Sep 29 11:49:41 2025] 127.0.0.1:49530 Closing
+[Mon Sep 29 11:49:43 2025] 127.0.0.1:49531 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 11:49:43 2025] 127.0.0.1:49531 Closing
+[Mon Sep 29 11:49:49 2025] 127.0.0.1:49533 Accepted
+[Mon Sep 29 11:49:49 2025] 127.0.0.1:49533 [200]: POST /validate_capacity.php
+[Mon Sep 29 11:49:49 2025] 127.0.0.1:49533 Closing
+[Mon Sep 29 11:49:51 2025] 127.0.0.1:49535 Accepted
+[Mon Sep 29 11:49:52 2025] 127.0.0.1:49535 [200]: POST /process.php
+[Mon Sep 29 11:49:52 2025] 127.0.0.1:49535 Closing
+[Mon Sep 29 11:49:55 2025] 127.0.0.1:49537 Accepted
+[Mon Sep 29 11:49:55 2025] 127.0.0.1:49537 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 11:49:55 2025] 127.0.0.1:49539 Accepted
+[Mon Sep 29 11:49:55 2025] 127.0.0.1:49537 Closing
+[Mon Sep 29 11:49:55 2025] 127.0.0.1:49539 Closing
+[Mon Sep 29 11:54:02 2025] 127.0.0.1:49564 Accepted
+[Mon Sep 29 11:54:02 2025] 127.0.0.1:49564 [200]: POST /validate_capacity.php
+[Mon Sep 29 11:54:02 2025] 127.0.0.1:49564 Closing
+[Mon Sep 29 11:54:37 2025] 127.0.0.1:49567 Accepted
+[Mon Sep 29 11:54:37 2025] 127.0.0.1:49567 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 11:54:37 2025] 127.0.0.1:49567 Closing
+[Mon Sep 29 11:54:37 2025] 127.0.0.1:49570 Accepted
+[Mon Sep 29 11:54:37 2025] 127.0.0.1:49571 Accepted
+[Mon Sep 29 11:54:37 2025] 127.0.0.1:49570 Closing
+[Mon Sep 29 11:54:38 2025] 127.0.0.1:49571 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 11:54:38 2025] 127.0.0.1:49571 Closing
+[Mon Sep 29 11:55:07 2025] 127.0.0.1:49579 Accepted
+[Mon Sep 29 11:55:07 2025] 127.0.0.1:49579 [200]: POST /validate_capacity.php
+[Mon Sep 29 11:55:07 2025] 127.0.0.1:49579 Closing
+[Mon Sep 29 11:55:20 2025] 127.0.0.1:49590 Accepted
+[Mon Sep 29 11:55:20 2025] 127.0.0.1:49590 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 11:55:20 2025] 127.0.0.1:49590 Closing
+[Mon Sep 29 11:55:20 2025] 127.0.0.1:49592 Accepted
+[Mon Sep 29 11:55:20 2025] 127.0.0.1:49594 Accepted
+[Mon Sep 29 11:55:20 2025] 127.0.0.1:49592 Closing
+[Mon Sep 29 11:55:23 2025] 127.0.0.1:49594 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 11:55:23 2025] 127.0.0.1:49594 Closing
+[Mon Sep 29 11:55:57 2025] 127.0.0.1:49613 Accepted
+[Mon Sep 29 11:55:57 2025] 127.0.0.1:49613 [200]: POST /validate_capacity.php
+[Mon Sep 29 11:55:57 2025] 127.0.0.1:49613 Closing
+[Mon Sep 29 11:56:22 2025] 127.0.0.1:49617 Accepted
+[Mon Sep 29 11:56:22 2025] 127.0.0.1:49617 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 11:56:22 2025] 127.0.0.1:49617 Closing
+[Mon Sep 29 11:56:22 2025] 127.0.0.1:49620 Accepted
+[Mon Sep 29 11:56:22 2025] 127.0.0.1:49621 Accepted
+[Mon Sep 29 11:56:22 2025] 127.0.0.1:49620 Closing
+[Mon Sep 29 11:56:23 2025] 127.0.0.1:49621 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 11:56:23 2025] 127.0.0.1:49621 Closing
+[Mon Sep 29 11:56:45 2025] 127.0.0.1:49628 Accepted
+[Mon Sep 29 11:56:45 2025] 127.0.0.1:49628 [200]: POST /validate_capacity.php
+[Mon Sep 29 11:56:45 2025] 127.0.0.1:49628 Closing
+[Mon Sep 29 11:57:15 2025] 127.0.0.1:49630 Accepted
+[Mon Sep 29 11:57:31 2025] 127.0.0.1:49630 [200]: POST /process.php
+[Mon Sep 29 11:57:31 2025] 127.0.0.1:49630 Closing
+[Mon Sep 29 11:57:35 2025] 127.0.0.1:49642 Accepted
+[Mon Sep 29 11:57:35 2025] 127.0.0.1:49642 [200]: GET /download.php?session=img_68da57fc3098f3.36873296&zip=1
+[Mon Sep 29 11:57:35 2025] 127.0.0.1:49642 Closing
+[Mon Sep 29 11:57:35 2025] 127.0.0.1:49644 Accepted
+[Mon Sep 29 11:57:38 2025] 127.0.0.1:49644 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 11:57:38 2025] 127.0.0.1:49644 Closing
+[Mon Sep 29 11:57:43 2025] 127.0.0.1:49649 Accepted
+[Mon Sep 29 11:57:43 2025] 127.0.0.1:49651 Accepted
+[Mon Sep 29 11:57:43 2025] 127.0.0.1:49649 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 11:57:43 2025] 127.0.0.1:49649 Closing
+[Mon Sep 29 11:57:44 2025] 127.0.0.1:49651 Closing
+[Mon Sep 29 11:59:05 2025] 127.0.0.1:49656 Accepted
+[Mon Sep 29 11:59:05 2025] 127.0.0.1:49656 [200]: POST /validate_capacity.php
+[Mon Sep 29 11:59:05 2025] 127.0.0.1:49656 Closing
+[Mon Sep 29 11:59:08 2025] 127.0.0.1:49659 Accepted
+[Mon Sep 29 11:59:20 2025] 127.0.0.1:49659 [200]: POST /process.php
+[Mon Sep 29 11:59:20 2025] 127.0.0.1:49659 Closing
+[Mon Sep 29 11:59:22 2025] 127.0.0.1:49663 Accepted
+[Mon Sep 29 11:59:22 2025] 127.0.0.1:49663 [200]: GET /download.php?session=img_68da586ccd68e3.23239328&zip=1
+[Mon Sep 29 11:59:22 2025] 127.0.0.1:49663 Closing
+[Mon Sep 29 11:59:22 2025] 127.0.0.1:49665 Accepted
+[Mon Sep 29 11:59:23 2025] 127.0.0.1:49665 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 11:59:23 2025] 127.0.0.1:49665 Closing
+[Mon Sep 29 12:05:36 2025] 127.0.0.1:49711 Accepted
+[Mon Sep 29 12:05:36 2025] 127.0.0.1:49711 Closing
+[Mon Sep 29 12:05:36 2025] 127.0.0.1:49713 Accepted
+[Mon Sep 29 12:05:36 2025] 127.0.0.1:49713 Closing
+[Mon Sep 29 12:05:43 2025] 127.0.0.1:49720 Accepted
+[Mon Sep 29 12:05:43 2025] 127.0.0.1:49720 [200]: GET /
+[Mon Sep 29 12:05:43 2025] 127.0.0.1:49722 Accepted
+[Mon Sep 29 12:05:43 2025] 127.0.0.1:49720 Closing
+[Mon Sep 29 12:05:43 2025] 127.0.0.1:49722 Closing
+[Mon Sep 29 12:05:43 2025] 127.0.0.1:49724 Accepted
+[Mon Sep 29 12:05:43 2025] 127.0.0.1:49724 [200]: GET /check.php
+[Mon Sep 29 12:05:43 2025] 127.0.0.1:49724 Closing
+[Mon Sep 29 12:05:44 2025] 127.0.0.1:49726 Accepted
+[Mon Sep 29 12:05:44 2025] 127.0.0.1:49726 [200]: GET /
+[Mon Sep 29 12:05:44 2025] 127.0.0.1:49726 Closing
+[Mon Sep 29 12:05:44 2025] 127.0.0.1:49728 Accepted
+[Mon Sep 29 12:05:45 2025] 127.0.0.1:49728 Closing
+[Mon Sep 29 12:05:45 2025] 127.0.0.1:49730 Accepted
+[Mon Sep 29 12:05:45 2025] 127.0.0.1:49730 [200]: GET /check.php
+[Mon Sep 29 12:05:45 2025] 127.0.0.1:49730 Closing
+[Mon Sep 29 12:10:01 2025] 127.0.0.1:49777 Accepted
+[Mon Sep 29 12:10:01 2025] 127.0.0.1:49777 [200]: GET /
+[Mon Sep 29 12:10:01 2025] 127.0.0.1:49779 Accepted
+[Mon Sep 29 12:10:01 2025] 127.0.0.1:49777 Closing
+[Mon Sep 29 12:10:02 2025] 127.0.0.1:49782 Accepted
+[Mon Sep 29 12:10:02 2025] 127.0.0.1:49782 [200]: GET /check.php
+[Mon Sep 29 12:10:02 2025] 127.0.0.1:49782 Closing
+[Mon Sep 29 12:10:02 2025] 127.0.0.1:49779 Closing
+[Mon Sep 29 12:10:14 2025] 127.0.0.1:49791 Accepted
+[Mon Sep 29 12:10:14 2025] 127.0.0.1:49791 [200]: GET /check.php
+[Mon Sep 29 12:10:14 2025] 127.0.0.1:49791 Closing
+[Mon Sep 29 12:10:14 2025] 127.0.0.1:49793 Accepted
+[Mon Sep 29 12:10:14 2025] 127.0.0.1:49795 Accepted
+[Mon Sep 29 12:10:14 2025] 127.0.0.1:49793 Closing
+[Mon Sep 29 12:10:18 2025] 127.0.0.1:49795 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 12:10:18 2025] 127.0.0.1:49795 Closing
+[Mon Sep 29 12:10:18 2025] 127.0.0.1:49804 Accepted
+[Mon Sep 29 12:10:18 2025] 127.0.0.1:49804 [200]: GET /status.php
+[Mon Sep 29 12:10:18 2025] 127.0.0.1:49804 Closing
+[Mon Sep 29 12:10:18 2025] 127.0.0.1:49806 Accepted
+[Mon Sep 29 12:10:19 2025] 127.0.0.1:49806 Closing
+[Mon Sep 29 12:10:39 2025] 127.0.0.1:49816 Accepted
+[Mon Sep 29 12:10:39 2025] 127.0.0.1:49816 [200]: GET /klasyczna.html
+[Mon Sep 29 12:10:39 2025] 127.0.0.1:49816 Closing
+[Mon Sep 29 12:10:39 2025] 127.0.0.1:49818 Accepted
+[Mon Sep 29 12:10:39 2025] 127.0.0.1:49818 Closing
+[Mon Sep 29 12:10:39 2025] 127.0.0.1:49820 Accepted
+[Mon Sep 29 12:10:39 2025] 127.0.0.1:49820 [200]: GET /check.php
+[Mon Sep 29 12:10:39 2025] 127.0.0.1:49820 Closing
+[Mon Sep 29 12:10:42 2025] 127.0.0.1:49822 Accepted
+[Mon Sep 29 12:10:42 2025] 127.0.0.1:49822 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 12:10:42 2025] 127.0.0.1:49822 Closing
+[Mon Sep 29 12:10:42 2025] 127.0.0.1:49824 Accepted
+[Mon Sep 29 12:10:42 2025] 127.0.0.1:49824 Closing
+[Mon Sep 29 12:11:03 2025] 127.0.0.1:49828 Accepted
+[Mon Sep 29 12:11:03 2025] 127.0.0.1:49828 [200]: GET /
+[Mon Sep 29 12:11:03 2025] 127.0.0.1:49828 Closing
+[Mon Sep 29 12:11:03 2025] 127.0.0.1:49831 Accepted
+[Mon Sep 29 12:11:03 2025] 127.0.0.1:49832 Accepted
+[Mon Sep 29 12:11:04 2025] 127.0.0.1:49831 Closing
+[Mon Sep 29 12:11:04 2025] 127.0.0.1:49832 [200]: GET /check.php
+[Mon Sep 29 12:11:04 2025] 127.0.0.1:49832 Closing
+[Mon Sep 29 12:11:13 2025] 127.0.0.1:49834 Accepted
+[Mon Sep 29 12:11:13 2025] 127.0.0.1:49834 [200]: GET /
+[Mon Sep 29 12:11:13 2025] 127.0.0.1:49834 Closing
+[Mon Sep 29 12:11:13 2025] 127.0.0.1:49836 Accepted
+[Mon Sep 29 12:11:13 2025] 127.0.0.1:49838 Accepted
+[Mon Sep 29 12:11:13 2025] 127.0.0.1:49836 Closing
+[Mon Sep 29 12:11:13 2025] 127.0.0.1:49838 [200]: GET /check.php
+[Mon Sep 29 12:11:13 2025] 127.0.0.1:49838 Closing
+[Mon Sep 29 12:11:18 2025] 127.0.0.1:49841 Accepted
+[Mon Sep 29 12:11:18 2025] 127.0.0.1:49841 [200]: GET /
+[Mon Sep 29 12:11:18 2025] 127.0.0.1:49841 Closing
+[Mon Sep 29 12:11:23 2025] 127.0.0.1:49847 Accepted
+[Mon Sep 29 12:11:23 2025] 127.0.0.1:49847 [200]: GET /klasyczna.html
+[Mon Sep 29 12:11:23 2025] 127.0.0.1:49847 Closing
+[Mon Sep 29 12:11:27 2025] 127.0.0.1:49850 Accepted
+[Mon Sep 29 12:11:27 2025] 127.0.0.1:49850 [200]: GET /status.php
+[Mon Sep 29 12:11:27 2025] 127.0.0.1:49850 Closing
+[Mon Sep 29 12:11:27 2025] 127.0.0.1:49853 Accepted
+[Mon Sep 29 12:11:27 2025] 127.0.0.1:49854 Accepted
+[Mon Sep 29 12:11:27 2025] 127.0.0.1:49853 Closing
+[Mon Sep 29 12:11:28 2025] 127.0.0.1:49854 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 12:11:28 2025] 127.0.0.1:49854 Closing
+[Mon Sep 29 12:11:32 2025] 127.0.0.1:49856 Accepted
+[Mon Sep 29 12:11:32 2025] 127.0.0.1:49856 [200]: GET /status.php
+[Mon Sep 29 12:11:32 2025] 127.0.0.1:49856 Closing
+[Mon Sep 29 12:11:32 2025] 127.0.0.1:49858 Accepted
+[Mon Sep 29 12:11:32 2025] 127.0.0.1:49860 Accepted
+[Mon Sep 29 12:11:32 2025] 127.0.0.1:49858 Closing
+[Mon Sep 29 12:11:33 2025] 127.0.0.1:49860 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 12:11:33 2025] 127.0.0.1:49860 Closing
+[Mon Sep 29 12:11:35 2025] 127.0.0.1:49862 Accepted
+[Mon Sep 29 12:11:35 2025] 127.0.0.1:49862 [200]: GET /check.php
+[Mon Sep 29 12:11:35 2025] 127.0.0.1:49862 Closing
+[Mon Sep 29 12:11:35 2025] 127.0.0.1:49865 Accepted
+[Mon Sep 29 12:11:35 2025] 127.0.0.1:49866 Accepted
+[Mon Sep 29 12:11:36 2025] 127.0.0.1:49865 Closing
+[Mon Sep 29 12:11:38 2025] 127.0.0.1:49866 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 12:11:38 2025] 127.0.0.1:49866 Closing
+[Mon Sep 29 12:11:49 2025] 127.0.0.1:49868 Accepted
+[Mon Sep 29 12:11:49 2025] 127.0.0.1:49868 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 12:11:49 2025] 127.0.0.1:49868 Closing
+[Mon Sep 29 12:11:49 2025] 127.0.0.1:49871 Accepted
+[Mon Sep 29 12:11:49 2025] 127.0.0.1:49872 Accepted
+[Mon Sep 29 12:11:50 2025] 127.0.0.1:49871 Closing
+[Mon Sep 29 12:11:53 2025] 127.0.0.1:49872 Closed without sending a request; it was probably just an unused speculative preconnection
+[Mon Sep 29 12:11:53 2025] 127.0.0.1:49872 Closing
+[Mon Sep 29 12:11:59 2025] 127.0.0.1:49876 Accepted
+[Mon Sep 29 12:11:59 2025] 127.0.0.1:49876 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 12:11:59 2025] 127.0.0.1:49876 Closing

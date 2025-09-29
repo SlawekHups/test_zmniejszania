@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesor Zdjęć - Progresywny (Prostia naprawa)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .main-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .drop-zone {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 40px 20px;
+            background: #f8f9ff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: #5a6fd8;
+            background: #f0f2ff;
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .select-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Settings Section */
+        .settings-section {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .setting-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+            display: block;
+        }
+
+        .setting-group select, .setting-group input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        /* Processing Method */
+        .method-section {
+            padding: 20px 30px;
+            background: #e8f4fd;
+            border-bottom: 1px solid #eee;
+            border-left: 4px solid #2196f3;
+        }
+
+        .method-toggle {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .method-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .method-option:hover {
+            border-color: #2196f3;
+        }
+
+        .method-option.selected {
+            border-color: #2196f3;
+            background: #e3f2fd;
+        }
+
+        .method-option input[type="radio"] {
+            margin: 0;
+        }
+
+        /* File List Section */
+        .file-list-section {
+            padding: 20px 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .file-item.processing {
+            border-left-color: #ffa726;
+            background: #fff8e1;
+        }
+
+        .file-item.completed {
+            border-left-color: #66bb6a;
+            background: #e8f5e8;
+        }
+
+        .file-item.error {
+            border-left-color: #ef5350;
+            background: #ffebee;
+        }
+
+        .file-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .file-details {
+            flex: 1;
+        }
+
+        .file-details h4 {
+            margin-bottom: 3px;
+            font-size: 0.95em;
+        }
+
+        .file-details p {
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        .file-progress {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .file-progress-bar {
+            height: 100%;
+            background: #667eea;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .file-progress-bar.processing {
+            background: #ffa726;
+            animation: progress-pulse 1.5s ease-in-out infinite;
+        }
+
+        .file-progress-bar.completed {
+            background: #66bb6a;
+            width: 100%;
+        }
+
+        .file-progress-bar.error {
+            background: #ef5350;
+            width: 100%;
+        }
+
+        @keyframes progress-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .file-status {
+            min-width: 80px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .file-status.pending { color: #666; }
+        .file-status.processing { color: #ffa726; }
+        .file-status.completed { color: #66bb6a; }
+        .file-status.error { color: #ef5350; }
+
+        /* Control Section */
+        .control-section {
+            padding: 20px 30px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .process-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .process-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .process-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .clear-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background: #5a6268;
+        }
+
+        /* Progress Overview */
+        .progress-overview {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .overall-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .overall-progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Results Section */
+        .results-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: none;
+        }
+
+        .results-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+        }
+
+        .results-content {
+            padding: 20px 30px;
+        }
+
+        .download-all-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .download-all-btn:hover {
+            background: #218838;
+        }
+
+        .results-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid #66bb6a;
+        }
+
+        .result-item .file-icon {
+            margin-right: 10px;
+        }
+
+        .result-item .file-details {
+            flex: 1;
+        }
+
+        .download-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📸 Procesor Zdjęć - Progresywny</h1>
+            <p>⚡ Poprawka ZIP - wszystkie pliki w jednym archiwum</p>
+        </div>
+
+        <div class="main-panel">
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <div class="drop-zone" id="dropZone">
+                    <div class="upload-icon">📤</div>
+                    <h3>Przeciągnij i upuść zdjęcia tutaj</h3>
+                    <p>lub kliknij aby wybrać pliki (JPG/JPEG)</p>
+                    <button class="select-btn" onclick="document.getElementById('fileInput').click()">
+                        Wybierz zdjęcia
+                    </button>
+                </div>
+                <input type="file" id="fileInput" class="file-input" multiple accept="image/jpeg,image/jpg">
+            </div>
+
+            <!-- Settings Section -->
+            <div class="settings-section">
+                <h4 style="margin-bottom: 15px;">⚙️ Ustawienia</h4>
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <label for="maxSize">Rozmiar (px)</label>
+                        <select id="maxSize">
+                            <option value="400">400px</option>
+                            <option value="600">600px</option>
+                            <option value="800" selected>800px</option>
+                            <option value="1200">1200px</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="quality">Jakość (%)</label>
+                        <select id="quality">
+                            <option value="70">70%</option>
+                            <option value="85" selected>85%</option>
+                            <option value="95">95%</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label>
+                            <input type="checkbox" id="progressive" checked> Progressive
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label>
+                            <input type="checkbox" id="autoRotate" checked> Auto-rotacja
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Method -->
+            <div class="method-section">
+                <h4 style="margin-bottom: 15px;">🚀 Metoda przetwarzania</h4>
+                <div class="method-toggle">
+                    <div class="method-option selected" onclick="selectMethod('all')">
+                        <input type="radio" name="method" value="all" checked>
+                        <label>📦 Wszystkie naraz (jeden ZIP)</label>
+                    </div>
+                    <div class="method-option" onclick="selectMethod('batch')">
+                        <input type="radio" name="method" value="batch">
+                        <label>⚡ Po partiach (progress dla każdego)</label>
+                    </div>
+                </div>
+                <div id="batchSettings" style="margin-top: 15px; display: none;">
+                    <label for="batchSize" style="margin-right: 10px;">Plików na raz:</label>
+                    <select id="batchSize" style="padding: 5px;">
+                        <option value="1">1 plik</option>
+                        <option value="3" selected>3 pliki</option>
+                        <option value="5">5 plików</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- File List Section -->
+            <div class="file-list-section" id="fileListSection" style="display: none;">
+                <h4 style="margin-bottom: 15px;">📋 Lista plików</h4>
+                <div id="fileList"></div>
+            </div>
+
+            <!-- Control Section -->
+            <div class="control-section">
+                <button class="process-btn" id="processBtn" onclick="startProcessing()" disabled>
+                    🚀 Rozpocznij przetwarzanie
+                </button>
+                <button class="clear-btn" onclick="clearFiles()">🗑️ Wyczyść</button>
+                
+                <div class="progress-overview" id="progressOverview">
+                    <div class="overall-progress-bar">
+                        <div class="overall-progress-fill" id="overallProgressFill"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalFiles">0</div>
+                            <div class="stat-label">Wszystkich</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="processedFiles">0</div>
+                            <div class="stat-label">Przetworzonych</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="currentlyProcessing">0</div>
+                            <div class="stat-label">W trakcie</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="errorFiles">0</div>
+                            <div class="stat-label">Błędów</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div class="results-header">
+                <h2>✅ Przetwarzanie zakończone!</h2>
+                <p id="resultsSummary">Twoje zdjęcia zostały przetworzone</p>
+            </div>
+            <div class="results-content" id="resultsContent">
+                <!-- Wyniki będą tutaj -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFiles = [];
+        let processedResults = [];
+        let allSessionIds = []; // Zbiera session ID z wszystkich partii
+        let processingStats = {
+            total: 0,
+            processed: 0,
+            errors: 0,
+            currentBatch: 0
+        };
+
+        // DOM Elements
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileListSection = document.getElementById('fileListSection');
+        const fileList = document.getElementById('fileList');
+        const processBtn = document.getElementById('processBtn');
+        const progressOverview = document.getElementById('progressOverview');
+        const overallProgressFill = document.getElementById('overallProgressFill');
+        const resultsSection = document.getElementById('resultsSection');
+
+        // Method Selection
+        function selectMethod(method) {
+            document.querySelectorAll('.method-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.closest('.method-option').classList.add('selected');
+            
+            document.querySelector(`input[value="${method}"]`).checked = true;
+            
+            // Show/hide batch settings
+            document.getElementById('batchSettings').style.display = 
+                method === 'batch' ? 'block' : 'none';
+        }
+
+        // Drag & Drop Events
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        // Handle Files
+        function handleFiles(files) {
+            const validFiles = Array.from(files).filter(file => {
+                const fileName = file.name.toLowerCase();
+                return fileName.endsWith('.jpg') || fileName.endsWith('.jpeg');
+            });
+
+            if (validFiles.length === 0) {
+                alert('Proszę wybrać pliki JPG/JPEG');
+                return;
+            }
+
+            selectedFiles = validFiles;
+            updateFileList();
+            processBtn.disabled = false;
+        }
+
+        // Update File List
+        function updateFileList() {
+            if (selectedFiles.length === 0) {
+                fileListSection.style.display = 'none';
+                return;
+            }
+
+            fileListSection.style.display = 'block';
+            fileList.innerHTML = '';
+
+            selectedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.id = `file-${index}`;
+                
+                fileItem.innerHTML = `
+                    <div class="file-icon">📄</div>
+                    <div class="file-details">
+                        <h4>${file.name}</h4>
+                        <p>${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                        <div class="file-progress">
+                            <div class="file-progress-bar" id="progress-${index}"></div>
+                        </div>
+                    </div>
+                    <div class="file-status pending" id="status-${index}">Oczekuje</div>
+                `;
+                
+                fileList.appendChild(fileItem);
+            });
+        }
+
+        // Start Processing
+        async function startProcessing() {
+            if (selectedFiles.length === 0) return;
+
+            const method = document.querySelector('input[name="method"]:checked').value;
+            
+            if (method === 'all') {
+                await processAllAtOnce();
+            } else {
+                await processInBatches();
+            }
+        }
+
+        // Process All At Once (Jedna sesja - jeden ZIP)
+        async function processAllAtOnce() {
+            // Walidacja pojemności
+            const validation = await validateCapacity();
+            
+            if (!validation.success) {
+                alert('Błąd walidacji: ' + (validation.error || 'Nieznany błąd'));
+                return;
+            }
+            
+            // Pokaż dialog walidacji
+            showValidationDialog(validation, 'all');
+        }
+
+        async function processAllAtOnceAfterValidation() {
+            processBtn.disabled = true;
+            progressOverview.style.display = 'block';
+            resultsSection.style.display = 'none';
+            
+            // Reset stats
+            processingStats = {
+                total: selectedFiles.length,
+                processed: 0,
+                errors: 0,
+                currentBatch: selectedFiles.length
+            };
+            
+            updateStats();
+
+            // Oznacz wszystkie pliki jako przetwarzane
+            selectedFiles.forEach((file, index) => {
+                updateFileStatus(index, 'processing', '⏳ Przetwarzanie...');
+            });
+
+            try {
+                const formData = new FormData();
+                
+                // Dodaj wszystkie pliki
+                selectedFiles.forEach(file => {
+                    formData.append('images[]', file);
+                });
+                
+                // Dodaj konfigurację
+                formData.append('maxSize', document.getElementById('maxSize').value);
+                formData.append('quality', document.getElementById('quality').value);
+                formData.append('progressive', document.getElementById('progressive').checked ? '1' : '0');
+                formData.append('preserveExif', '1');
+                formData.append('autoRotate', document.getElementById('autoRotate').checked ? '1' : '0');
+                formData.append('sortBy', 'exif_date');
+                formData.append('sortOrder', 'asc');
+                formData.append('keepOriginal', '0');
+                formData.append('outputFormat', 'original');
+
+                const response = await fetch('process.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.success && result.files) {
+                    // Aktualizuj statusy wszystkich plików
+                    result.files.forEach((file, index) => {
+                        updateFileStatus(index, 'completed', '✅ Gotowe');
+                        processingStats.processed++;
+                    });
+                    
+                    processedResults = result.files.map(file => ({
+                        success: true,
+                        original_name: file.original_name,
+                        processed_name: file.processed_name,
+                        download_url: file.download_url,
+                        original_size: file.original_size,
+                        new_size: file.new_size,
+                        date_taken: file.date_taken
+                    }));
+                    
+                    // Zapisz session ID dla ZIP
+                    if (result.session_id) {
+                        window.masterSessionId = result.session_id;
+                    }
+                    
+                } else {
+                    throw new Error(result.error || 'Nieznany błąd');
+                }
+
+            } catch (error) {
+                console.error('Błąd przetwarzania:', error);
+                // Oznacz wszystkie jako błąd
+                selectedFiles.forEach((file, index) => {
+                    updateFileStatus(index, 'error', '❌ Błąd');
+                    processingStats.errors++;
+                });
+                alert('Błąd: ' + error.message);
+            } finally {
+                processingStats.currentBatch = 0;
+                updateStats();
+                updateOverallProgress();
+                processBtn.disabled = false;
+                showFinalResults();
+            }
+        }
+
+        // Process In Batches (jak wcześniej)
+        async function processInBatches() {
+            // Walidacja pojemności
+            const validation = await validateCapacity();
+            
+            if (!validation.success) {
+                alert('Błąd walidacji: ' + (validation.error || 'Nieznany błąd'));
+                return;
+            }
+            
+            // Pokaż dialog walidacji
+            showValidationDialog(validation, 'batches');
+        }
+
+        async function processInBatchesAfterValidation() {
+            processBtn.disabled = true;
+            progressOverview.style.display = 'block';
+            resultsSection.style.display = 'none';
+            
+            // Reset stats
+            processingStats = {
+                total: selectedFiles.length,
+                processed: 0,
+                errors: 0,
+                currentBatch: 0
+            };
+            
+            updateStats();
+            processedResults = [];
+
+            const batchSize = parseInt(document.getElementById('batchSize').value);
+            
+            try {
+                // Procesuj w partiach
+                for (let i = 0; i < selectedFiles.length; i += batchSize) {
+                    const batch = selectedFiles.slice(i, i + batchSize);
+                    processingStats.currentBatch = batch.length;
+                    updateStats();
+                    
+                    // Oznacz pliki jako przetwarzane
+                    for (let j = 0; j < batch.length; j++) {
+                        const fileIndex = i + j;
+                        updateFileStatus(fileIndex, 'processing', '⏳ Przetwarzanie...');
+                    }
+                    
+                    // Przetwórz partię
+                    const batchResults = await processBatch(batch, i);
+                    
+                    // Aktualizuj statusy plików
+                    batchResults.forEach((result, idx) => {
+                        const fileIndex = i + idx;
+                        if (result.success) {
+                            updateFileStatus(fileIndex, 'completed', '✅ Gotowe');
+                            processingStats.processed++;
+                            processedResults.push(result);
+                            
+                            // Zbierz session ID z każdej partii
+                            if (result.session_id && !allSessionIds.includes(result.session_id)) {
+                                allSessionIds.push(result.session_id);
+                            }
+                            
+                            // Zapisz pierwszy session ID dla kompatybilności
+                            if (!window.masterSessionId && result.session_id) {
+                                window.masterSessionId = result.session_id;
+                            }
+                        } else {
+                            updateFileStatus(fileIndex, 'error', '❌ Błąd');
+                            processingStats.errors++;
+                        }
+                    });
+                    
+                    processingStats.currentBatch = 0;
+                    updateStats();
+                    updateOverallProgress();
+                }
+                
+            } catch (error) {
+                console.error('Błąd przetwarzania:', error);
+                alert('Błąd: ' + error.message);
+            } finally {
+                processBtn.disabled = false;
+                showFinalResults();
+            }
+        }
+
+        // Process Batch (helper function)
+        async function processBatch(files, startIndex) {
+            const formData = new FormData();
+            
+            files.forEach(file => {
+                formData.append('images[]', file);
+            });
+            
+            formData.append('maxSize', document.getElementById('maxSize').value);
+            formData.append('quality', document.getElementById('quality').value);
+            formData.append('progressive', document.getElementById('progressive').checked ? '1' : '0');
+            formData.append('preserveExif', '1');
+            formData.append('autoRotate', document.getElementById('autoRotate').checked ? '1' : '0');
+            formData.append('sortBy', 'exif_date');
+            formData.append('sortOrder', 'asc');
+            formData.append('keepOriginal', '0');
+            formData.append('outputFormat', 'original');
+
+            try {
+                const response = await fetch('process.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.success && result.files) {
+                    return result.files.map(file => ({
+                        success: true,
+                        session_id: result.session_id,
+                        original_name: file.original_name,
+                        processed_name: file.processed_name,
+                        download_url: file.download_url,
+                        original_size: file.original_size,
+                        new_size: file.new_size,
+                        date_taken: file.date_taken
+                    }));
+                } else {
+                    return files.map(file => ({
+                        success: false,
+                        original_name: file.name,
+                        error: result.error || 'Nieznany błąd'
+                    }));
+                }
+            } catch (error) {
+                return files.map(file => ({
+                    success: false,
+                    original_name: file.name,
+                    error: error.message
+                }));
+            }
+        }
+
+        // Validate Capacity
+        async function validateCapacity() {
+            if (selectedFiles.length === 0) {
+                return { can_process: false, error: 'Brak plików do sprawdzenia' };
+            }
+
+            const fileData = selectedFiles.map(file => ({
+                name: file.name,
+                size: file.size,
+                type: file.type
+            }));
+
+            try {
+                const response = await fetch('validate_capacity.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ files: fileData })
+                });
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                return { can_process: false, error: 'Błąd walidacji: ' + error.message };
+            }
+        }
+
+        // Show Validation Dialog
+        function showValidationDialog(validation, mode) {
+            const { validation_status, can_process, summary, errors, warnings, recommendations } = validation;
+            
+            let icon = '✅';
+            let title = 'Walidacja przeszła pomyślnie';
+            let titleColor = '#28a745';
+            
+            if (validation_status === 'error') {
+                icon = '❌';
+                title = 'Błędy walidacji';
+                titleColor = '#dc3545';
+            } else if (warnings.length > 0) {
+                icon = '⚠️';
+                title = 'Ostrzeżenia walidacji';
+                titleColor = '#ffc107';
+            }
+            
+            const modeText = mode === 'all' ? 'Wszystkie naraz' : 'Po partiach';
+            
+            let content = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 3em; margin-bottom: 10px;">${icon}</div>
+                    <h3 style="color: ${titleColor}; margin: 0;">${title}</h3>
+                    <p style="color: #666; margin: 5px 0;">Tryb: ${modeText}</p>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4>📊 Podsumowanie:</h4>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li><strong>Pliki:</strong> ${summary.file_count}</li>
+                        <li><strong>Rozmiar:</strong> ${summary.total_size}</li>
+                        <li><strong>Szacowany czas:</strong> ${summary.estimated_time}</li>
+                        <li><strong>Pamięć:</strong> ${summary.estimated_memory}</li>
+                    </ul>
+                </div>
+            `;
+            
+            if (errors.length > 0) {
+                content += `
+                    <div style="background: #f8d7da; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #721c24; margin-top: 0;">❌ Błędy:</h4>
+                        <ul style="margin: 0; padding-left: 20px; color: #721c24;">
+                            ${errors.map(error => `<li>${error}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (warnings.length > 0) {
+                content += `
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #856404; margin-top: 0;">⚠️ Ostrzeżenia:</h4>
+                        <ul style="margin: 0; padding-left: 20px; color: #856404;">
+                            ${warnings.map(warning => `<li>${warning}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (recommendations.length > 0) {
+                content += `
+                    <div style="background: #d1ecf1; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #0c5460; margin-top: 0;">💡 Rekomendacje:</h4>
+                        <ul style="margin: 0; padding-left: 20px; color: #0c5460;">
+                            ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            const buttons = can_process ? 
+                `<button onclick="closeValidationDialog(); ${mode === 'all' ? 'processAllAtOnceAfterValidation' : 'processInBatchesAfterValidation'}();" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-right: 10px;">🚀 Kontynuuj przetwarzanie</button>
+                 <button onclick="closeValidationDialog();" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Anuluj</button>` :
+                `<button onclick="closeValidationDialog();" style="background: #dc3545; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Zamknij</button>`;
+            
+            content += `<div style="text-align: center; margin-top: 20px;">${buttons}</div>`;
+            
+            // Create and show dialog
+            const dialog = document.createElement('div');
+            dialog.id = 'validationDialog';
+            dialog.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.5); z-index: 1000;
+                display: flex; align-items: center; justify-content: center;
+            `;
+            
+            dialog.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 12px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    ${content}
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+        }
+
+        function closeValidationDialog() {
+            const dialog = document.getElementById('validationDialog');
+            if (dialog) {
+                dialog.remove();
+            }
+        }
+
+        // Update File Status
+        function updateFileStatus(index, status, text) {
+            const fileItem = document.getElementById(`file-${index}`);
+            const statusElement = document.getElementById(`status-${index}`);
+            const progressBar = document.getElementById(`progress-${index}`);
+            
+            if (fileItem && statusElement && progressBar) {
+                fileItem.className = `file-item ${status}`;
+                statusElement.className = `file-status ${status}`;
+                statusElement.textContent = text;
+                progressBar.className = `file-progress-bar ${status}`;
+            }
+        }
+
+        // Update Stats
+        function updateStats() {
+            document.getElementById('totalFiles').textContent = processingStats.total;
+            document.getElementById('processedFiles').textContent = processingStats.processed;
+            document.getElementById('currentlyProcessing').textContent = processingStats.currentBatch;
+            document.getElementById('errorFiles').textContent = processingStats.errors;
+        }
+
+        // Update Overall Progress
+        function updateOverallProgress() {
+            const completed = processingStats.processed + processingStats.errors;
+            const percent = processingStats.total > 0 ? (completed / processingStats.total) * 100 : 0;
+            overallProgressFill.style.width = percent + '%';
+        }
+
+        // Show Final Results
+        async function showFinalResults() {
+            const successCount = processedResults.length;
+            const errorCount = processingStats.errors;
+            
+            document.getElementById('resultsSummary').textContent = 
+                `${successCount} plików przetworzonych, ${errorCount} błędów`;
+            
+            let content = '';
+            
+            // Jeśli mamy więcej niż jedną sesję, stwórz combined ZIP
+            if (successCount > 0) {
+                if (allSessionIds.length > 1) {
+                    // Tryb progresywny - wiele sesji, stwórz combined ZIP
+                    content += `
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <button id="createCombinedZip" class="download-all-btn" onclick="createCombinedZip()">
+                                📦 Tworzenie ZIP... ⏳
+                            </button>
+                            <p style="color: #666; font-size: 0.9em; margin-top: 5px;">
+                                Łączenie ${successCount} plików z ${allSessionIds.length} partii
+                            </p>
+                        </div>
+                    `;
+                } else if (window.masterSessionId) {
+                    // Jedna sesja - bezpośredni link do ZIP
+                    content += `
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <a href="download.php?session=${window.masterSessionId}&zip=1" class="download-all-btn">
+                                📦 Pobierz wszystkie (ZIP)
+                            </a>
+                            <p style="color: #666; font-size: 0.9em; margin-top: 5px;">
+                                ${successCount} plików w archiwum
+                            </p>
+                        </div>
+                    `;
+                }
+            }
+            
+            content += '<div class="results-list">';
+            
+            processedResults.forEach(result => {
+                content += `
+                    <div class="result-item">
+                        <div class="file-icon">✅</div>
+                        <div class="file-details">
+                            <h4>${result.processed_name || result.original_name}</h4>
+                            <p>Rozmiar: ${result.original_size} → ${result.new_size}</p>
+                            ${result.date_taken ? `<p>Data: ${result.date_taken}</p>` : ''}
+                        </div>
+                        <a href="${result.download_url}" class="download-btn" target="_blank">
+                            💾 Pobierz
+                        </a>
+                    </div>
+                `;
+            });
+            
+            content += '</div>';
+            
+            document.getElementById('resultsContent').innerHTML = content;
+            resultsSection.style.display = 'block';
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Create Combined ZIP from multiple sessions
+        async function createCombinedZip() {
+            const button = document.getElementById('createCombinedZip');
+            button.disabled = true;
+            button.textContent = '📦 Tworzenie ZIP... ⏳';
+            
+            try {
+                const response = await fetch('create_combined_zip.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        session_ids: allSessionIds
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Zamień przycisk na link do pobrania
+                    button.outerHTML = `
+                        <a href="${result.download_url}" class="download-all-btn">
+                            📦 Pobierz wszystkie (ZIP)
+                        </a>
+                    `;
+                    
+                    // Zaktualizuj opis
+                    const description = button.parentNode.querySelector('p');
+                    if (description) {
+                        description.textContent = `${result.total_files} plików z ${result.source_sessions} partii`;
+                    }
+                } else {
+                    throw new Error(result.error || 'Błąd tworzenia ZIP');
+                }
+                
+            } catch (error) {
+                console.error('Błąd tworzenia combined ZIP:', error);
+                button.textContent = '❌ Błąd tworzenia ZIP';
+                button.style.backgroundColor = '#dc3545';
+                
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.textContent = '📦 Spróbuj ponownie';
+                    button.style.backgroundColor = '';
+                }, 3000);
+            }
+        }
+
+        // Clear Files
+        function clearFiles() {
+            selectedFiles = [];
+            processedResults = [];
+            allSessionIds = [];
+            window.masterSessionId = null;
+            updateFileList();
+            processBtn.disabled = true;
+            progressOverview.style.display = 'none';
+            resultsSection.style.display = 'none';
+            fileInput.value = '';
+            
+            processingStats = { total: 0, processed: 0, errors: 0, currentBatch: 0 };
+            updateStats();
+            overallProgressFill.style.width = '0%';
+        }
+    </script>
+</body>
+</html>

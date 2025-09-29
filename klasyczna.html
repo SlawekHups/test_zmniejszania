@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klasyczny Procesor Zdjęć</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .upload-section {
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            padding: 60px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            background: #fafafa;
+        }
+
+        .upload-section.dragover {
+            border-color: #4facfe;
+            background: #f0f8ff;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .settings-panel {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .settings-panel.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .setting-group {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .setting-group h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .setting-item {
+            margin-bottom: 15px;
+        }
+
+        .setting-item label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .setting-item input, .setting-item select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .setting-item input:focus, .setting-item select:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        .file-list {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .file-list.show {
+            display: block;
+        }
+
+        .file-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .file-icon {
+            background: #4facfe;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .file-details h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .file-details p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .file-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-processing {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .process-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .process-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .process-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .progress-section {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .progress-section.show {
+            display: block;
+        }
+
+        .progress-bar {
+            background: #eee;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .results-section {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .toggle-settings {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-settings:hover {
+            background: #5a6268;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .file-status {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📸 Profesjonalny Procesor Zdjęć</h1>
+            <p>Konwertuj, zmniejsz i optymalizuj swoje zdjęcia z zachowaniem dat EXIF</p>
+        </div>
+
+        <div class="main-content">
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Przeciągnij i upuść zdjęcia tutaj lub kliknij aby wybrać</div>
+                <input type="file" id="fileInput" class="file-input" multiple accept="image/jpeg,image/jpg">
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    Wybierz zdjęcia
+                </button>
+            </div>
+
+            <button class="toggle-settings" onclick="toggleSettings()">
+                ⚙️ Ustawienia zaawansowane
+            </button>
+
+            <div class="settings-panel" id="settingsPanel">
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <h3>🖼️ Ustawienia obrazu</h3>
+                        <div class="setting-item">
+                            <label for="maxSize">Maksymalny rozmiar (px):</label>
+                            <input type="number" id="maxSize" value="800" min="100" max="4000">
+                        </div>
+                        <div class="setting-item">
+                            <label for="quality">Jakość JPEG (%):</label>
+                            <input type="range" id="quality" min="50" max="100" value="85" 
+                                   oninput="document.getElementById('qualityValue').textContent = this.value + '%'">
+                            <span id="qualityValue">85%</span>
+                        </div>
+                        <div class="setting-item">
+                            <label for="progressive">Progressive JPEG:</label>
+                            <select id="progressive">
+                                <option value="1">Tak (lepsze dla web)</option>
+                                <option value="0">Nie</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>📅 Zarządzanie datami</h3>
+                        <div class="setting-item">
+                            <label for="preserveExif">Zachowaj daty EXIF:</label>
+                            <select id="preserveExif">
+                                <option value="1">Tak (zalecane)</option>
+                                <option value="0">Nie</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="sortBy">Sortuj pliki według:</label>
+                            <select id="sortBy">
+                                <option value="exif_date">Data EXIF (DateTimeOriginal)</option>
+                                <option value="file_date">Data modyfikacji pliku</option>
+                                <option value="filename">Nazwa pliku</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="sortOrder">Kolejność sortowania:</label>
+                            <select id="sortOrder">
+                                <option value="asc">Od najstarszego do najnowszego</option>
+                                <option value="desc">Od najnowszego do najstarszego</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>🔧 Opcje dodatkowe</h3>
+                        <div class="setting-item">
+                            <label for="autoRotate">Automatyczna rotacja EXIF:</label>
+                            <select id="autoRotate">
+                                <option value="1">Tak (zalecane)</option>
+                                <option value="0">Nie</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="keepOriginal">Zachowaj oryginalne pliki:</label>
+                            <select id="keepOriginal">
+                                <option value="1">Tak</option>
+                                <option value="0">Nie (tylko zmniejszone)</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="outputFormat">Format nazw plików:</label>
+                            <select id="outputFormat">
+                                <option value="original">Zachowaj oryginalne nazwy</option>
+                                <option value="numbered">Numeruj: 001_nazwa.jpeg</option>
+                                <option value="dated">Z datą: 2024-01-01_nazwa.jpeg</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="file-list" id="fileList">
+                <h3>📋 Wybrane pliki:</h3>
+                <div id="fileItems"></div>
+                <button class="process-btn" id="processBtn" onclick="processImages()">
+                    🚀 Przetwórz zdjęcia
+                </button>
+            </div>
+
+            <div class="progress-section" id="progressSection">
+                <h3>⏳ Postęp przetwarzania:</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Przygotowywanie...</div>
+            </div>
+
+            <div class="results-section" id="resultsSection">
+                <h3>✅ Przetwarzanie zakończone!</h3>
+                <div id="resultsContent"></div>
+                <a href="#" class="download-btn" id="downloadBtn">
+                    💾 Pobierz wszystkie zdjęcia
+                </a>
+                <button class="upload-btn" onclick="resetApp()">
+                    🔄 Przetwórz kolejne zdjęcia
+                </button>
+                <button class="toggle-settings" onclick="toggleLogs()" style="margin-top: 10px;">
+                    📋 Pokaż logi przetwarzania
+                </button>
+                <div class="logs-section" id="logsSection" style="display: none; margin-top: 20px;">
+                    <h4>📋 Logi przetwarzania:</h4>
+                    <div id="logsContent" style="background: #f8f9fa; padding: 15px; border-radius: 10px; max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 0.9em;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFiles = [];
+        let processedFiles = [];
+
+        // Drag & Drop functionality
+        const uploadSection = document.getElementById('uploadSection');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.classList.add('dragover');
+        });
+
+        uploadSection.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadSection.classList.remove('dragover');
+        });
+
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        uploadSection.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            console.log('Otrzymane pliki:', files);
+            
+            const validFiles = Array.from(files).filter(file => {
+                const fileName = file.name.toLowerCase();
+                const fileType = file.type.toLowerCase();
+                
+                // Sprawdź rozszerzenie pliku
+                const hasValidExtension = fileName.endsWith('.jpg') || fileName.endsWith('.jpeg');
+                
+                // Sprawdź MIME type (może być pusty przy drag&drop)
+                const hasValidMimeType = fileType === 'image/jpeg' || 
+                                       fileType === 'image/jpg' || 
+                                       fileType === '' || // Pusty MIME type przy drag&drop
+                                       fileType === 'application/octet-stream'; // Czasem tak ustawia
+                
+                console.log(`Plik: ${file.name}, Type: ${file.type}, Valid: ${hasValidExtension && hasValidMimeType}`);
+                
+                return hasValidExtension && hasValidMimeType;
+            });
+
+            console.log('Prawidłowe pliki:', validFiles);
+
+            if (validFiles.length === 0) {
+                showAlert(`Nie wybrano żadnych prawidłowych plików JPEG/JPG. Sprawdź czy pliki mają rozszerzenie .jpg lub .jpeg`, 'error');
+                return;
+            }
+
+            selectedFiles = validFiles;
+            displayFiles();
+            showAlert(`Wybrano ${validFiles.length} plików do przetworzenia.`, 'success');
+        }
+
+        function displayFiles() {
+            const fileList = document.getElementById('fileList');
+            const fileItems = document.getElementById('fileItems');
+            
+            fileItems.innerHTML = '';
+            
+            selectedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                const lastModified = new Date(file.lastModified).toLocaleString('pl-PL');
+                
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-icon">📷</div>
+                        <div class="file-details">
+                            <h4>${file.name}</h4>
+                            <p>Rozmiar: ${fileSize} MB | Modyfikacja: ${lastModified}</p>
+                        </div>
+                    </div>
+                    <div class="file-status status-pending">Oczekuje</div>
+                `;
+                
+                fileItems.appendChild(fileItem);
+            });
+            
+            fileList.classList.add('show');
+        }
+
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('show');
+        }
+
+        // Validate Capacity
+        async function validateCapacity() {
+            if (selectedFiles.length === 0) {
+                return { can_process: false, error: 'Brak plików do sprawdzenia' };
+            }
+
+            const fileData = selectedFiles.map(file => ({
+                name: file.name,
+                size: file.size,
+                type: file.type
+            }));
+
+            try {
+                const response = await fetch('validate_capacity.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ files: fileData })
+                });
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                return { can_process: false, error: 'Błąd walidacji: ' + error.message };
+            }
+        }
+
+        // Show Validation Dialog
+        function showValidationDialog(validation) {
+            const { validation_status, can_process, summary, errors, warnings, recommendations } = validation;
+            
+            let icon = '✅';
+            let title = 'Walidacja przeszła pomyślnie';
+            let titleColor = '#28a745';
+            
+            if (validation_status === 'error') {
+                icon = '❌';
+                title = 'Błędy walidacji';
+                titleColor = '#dc3545';
+            } else if (warnings.length > 0) {
+                icon = '⚠️';
+                title = 'Ostrzeżenia walidacji';
+                titleColor = '#ffc107';
+            }
+            
+            let content = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 3em; margin-bottom: 10px;">${icon}</div>
+                    <h3 style="color: ${titleColor}; margin: 0;">${title}</h3>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4>📊 Podsumowanie:</h4>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li><strong>Pliki:</strong> ${summary.file_count}</li>
+                        <li><strong>Rozmiar:</strong> ${summary.total_size}</li>
+                        <li><strong>Szacowany czas:</strong> ${summary.estimated_time}</li>
+                        <li><strong>Pamięć:</strong> ${summary.estimated_memory}</li>
+                    </ul>
+                </div>
+            `;
+            
+            if (errors.length > 0) {
+                content += `
+                    <div style="background: #f8d7da; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #721c24; margin-top: 0;">❌ Błędy:</h4>
+                        <ul style="margin: 0; padding-left: 20px; color: #721c24;">
+                            ${errors.map(error => `<li>${error}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (warnings.length > 0) {
+                content += `
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #856404; margin-top: 0;">⚠️ Ostrzeżenia:</h4>
+                        <ul style="margin: 0; padding-left: 20px; color: #856404;">
+                            ${warnings.map(warning => `<li>${warning}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (recommendations.length > 0) {
+                content += `
+                    <div style="background: #d1ecf1; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #0c5460; margin-top: 0;">💡 Rekomendacje:</h4>
+                        <ul style="margin: 0; padding-left: 20px; color: #0c5460;">
+                            ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            const buttons = can_process ? 
+                `<button onclick="closeValidationDialog(); processImagesAfterValidation();" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-right: 10px;">🚀 Kontynuuj przetwarzanie</button>
+                 <button onclick="closeValidationDialog();" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Anuluj</button>` :
+                `<button onclick="closeValidationDialog();" style="background: #dc3545; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Zamknij</button>`;
+            
+            content += `<div style="text-align: center; margin-top: 20px;">${buttons}</div>`;
+            
+            // Create and show dialog
+            const dialog = document.createElement('div');
+            dialog.id = 'validationDialog';
+            dialog.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.5); z-index: 1000;
+                display: flex; align-items: center; justify-content: center;
+            `;
+            
+            dialog.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 12px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    ${content}
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+        }
+
+        function closeValidationDialog() {
+            const dialog = document.getElementById('validationDialog');
+            if (dialog) {
+                dialog.remove();
+            }
+        }
+
+        async function processImages() {
+            if (selectedFiles.length === 0) {
+                showAlert('Najpierw wybierz pliki do przetworzenia.', 'error');
+                return;
+            }
+
+            // Walidacja pojemności
+            const validation = await validateCapacity();
+            
+            if (!validation.success) {
+                showAlert('Błąd walidacji: ' + (validation.error || 'Nieznany błąd'), 'error');
+                return;
+            }
+            
+            // Pokaż dialog walidacji
+            showValidationDialog(validation);
+        }
+
+        function processImagesAfterValidation() {
+            const formData = new FormData();
+            
+            // Dodaj pliki
+            selectedFiles.forEach(file => {
+                formData.append('images[]', file);
+            });
+
+            // Dodaj ustawienia
+            formData.append('maxSize', document.getElementById('maxSize').value);
+            formData.append('quality', document.getElementById('quality').value);
+            formData.append('progressive', document.getElementById('progressive').value);
+            formData.append('preserveExif', document.getElementById('preserveExif').value);
+            formData.append('sortBy', document.getElementById('sortBy').value);
+            formData.append('sortOrder', document.getElementById('sortOrder').value);
+            formData.append('autoRotate', document.getElementById('autoRotate').value);
+            formData.append('keepOriginal', document.getElementById('keepOriginal').value);
+            formData.append('outputFormat', document.getElementById('outputFormat').value);
+
+            // Pokaż progress
+            showProgress();
+            
+            // Wyślij request
+            fetch('process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from server:', data);
+                hideProgress(); // Ukryj progress bar
+                
+                if (data.success) {
+                    showResults(data);
+                } else {
+                    showAlert(data.error || 'Wystąpił błąd podczas przetwarzania.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert('Wystąpił błąd połączenia.', 'error');
+                hideProgress();
+            });
+        }
+
+        function showProgress() {
+            document.getElementById('progressSection').classList.add('show');
+            document.getElementById('processBtn').disabled = true;
+            
+            // Pokaż nieokreślony pasek postępu
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            progressFill.style.width = '100%';
+            progressFill.style.background = 'linear-gradient(90deg, #4facfe 0%, #00f2fe 50%, #4facfe 100%)';
+            progressFill.style.animation = 'pulse 1.5s ease-in-out infinite';
+            progressText.textContent = 'Przetwarzanie zdjęć...';
+        }
+
+        // Funkcja checkJobStatus usunięta - nie jest potrzebna dla szybkich operacji
+
+        function hideProgress() {
+            document.getElementById('progressSection').classList.remove('show');
+            document.getElementById('processBtn').disabled = false;
+            
+            // Reset progress bar styles
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = '0%';
+            progressFill.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+            progressFill.style.animation = '';
+        }
+
+        function showResults(data) {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsContent = document.getElementById('resultsContent');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            console.log('Received data:', data); // Debug log
+            
+            resultsContent.innerHTML = `
+                <div class="alert alert-success">
+                    Przetworzono ${data.processed} z ${data.total} plików.
+                    ${data.errors > 0 ? `<br>⚠️ Błędy: ${data.errors}` : ''}
+                </div>
+                <div class="file-list">
+                    ${data.files.map((file, index) => `
+                        <div class="file-item">
+                            <div class="file-info">
+                                <div class="file-icon">✅</div>
+                                <div class="file-details">
+                                    <h4>${file.processed_name || file.original_name}</h4>
+                                    <p><strong>Oryginał:</strong> ${file.original_name}</p>
+                                    <p><strong>Rozmiar:</strong> ${file.original_size} → ${file.new_size}</p>
+                                    <p><strong>Data:</strong> ${file.date_taken || 'Brak EXIF'}</p>
+                                    ${file.dimensions_original ? `<p><strong>Wymiary:</strong> ${file.dimensions_original[0]}×${file.dimensions_original[1]} → ${file.dimensions_new ? file.dimensions_new[0] + '×' + file.dimensions_new[1] : 'N/A'}</p>` : ''}
+                                </div>
+                            </div>
+                            <a href="${file.download_url}" class="download-btn" style="padding: 8px 15px; font-size: 0.9em;" target="_blank">
+                                💾 Pobierz
+                            </a>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            downloadBtn.href = data.zip_download_url;
+            
+            // Pokaż logi jeśli są dostępne
+            if (data.log && data.log.length > 0) {
+                const logsContent = document.getElementById('logsContent');
+                logsContent.innerHTML = data.log.map(log => 
+                    `<div style="margin-bottom: 5px; padding: 3px 0; border-bottom: 1px solid #eee;">${log}</div>`
+                ).join('');
+            }
+            
+            resultsSection.classList.add('show');
+        }
+        
+        function toggleLogs() {
+            const logsSection = document.getElementById('logsSection');
+            const isVisible = logsSection.style.display !== 'none';
+            logsSection.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            const mainContent = document.querySelector('.main-content');
+            mainContent.insertBefore(alert, mainContent.firstChild);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+
+        function resetApp() {
+            selectedFiles = [];
+            processedFiles = [];
+            
+            document.getElementById('fileList').classList.remove('show');
+            document.getElementById('progressSection').classList.remove('show');
+            document.getElementById('resultsSection').classList.remove('show');
+            document.getElementById('fileInput').value = '';
+            
+            showAlert('Aplikacja została zresetowana. Możesz wybrać nowe pliki.', 'info');
+        }
+
+        // Sprawdź dostępność PHP przy ładowaniu strony
+        window.addEventListener('load', () => {
+            fetch('check.php')
+            .then(response => response.json())
+            .then(data => {
+                if (!data.gd_available) {
+                    showAlert('⚠️ Rozszerzenie GD nie jest dostępne. Skontaktuj się z administratorem.', 'error');
+                }
+                if (!data.exif_available) {
+                    showAlert('⚠️ Rozszerzenie EXIF nie jest dostępne. Daty zdjęć mogą nie być prawidłowo odczytywane.', 'error');
+                }
+            })
+            .catch(() => {
+                showAlert('⚠️ Nie można połączyć się z serwerem. Sprawdź konfigurację PHP.', 'error');
+            });
+        });
+    </script>
+</body>
+</html>

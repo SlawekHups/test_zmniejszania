@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesor Zdjęć - Wybierz Wersję</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .main-content {
+            padding: 60px 40px;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .intro-section h2 {
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .intro-section p {
+            color: #666;
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .versions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .version-card {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .version-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .version-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #4facfe;
+        }
+
+        .version-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .version-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .version-title {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .version-description {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .features-list {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            color: #555;
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1em;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .version-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+            min-width: 200px;
+        }
+
+        .version-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .version-btn.progressive {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .version-btn.progressive:hover {
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .additional-info {
+            background: #e9ecef;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .additional-info h3 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .additional-info p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .diagnostic-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .diagnostic-btn:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        .badge.recommended {
+            background: #28a745;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .main-content {
+                padding: 40px 20px;
+            }
+            
+            .versions-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .version-card {
+                padding: 30px 20px;
+            }
+            
+            .version-btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        .server-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .server-status.error {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="server-status" id="serverStatus">
+        🔄 Sprawdzanie serwera...
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📸 Procesor Zdjęć</h1>
+            <p>Profesjonalne narzędzie do konwersji, zmniejszania i optymalizacji zdjęć z zachowaniem dat EXIF</p>
+        </div>
+
+        <div class="main-content">
+            <div class="intro-section">
+                <h2>Wybierz Wersję Aplikacji</h2>
+                <p>Dostępne są dwie wersje aplikacji dostosowane do różnych potrzeb. Wybierz tę, która najlepiej odpowiada Twoim wymaganiom.</p>
+            </div>
+
+            <div class="versions-grid">
+                <div class="version-card">
+                    <div class="version-icon">🎯</div>
+                    <h3 class="version-title">
+                        Wersja Klasyczna
+                        <span class="badge">Stabilna</span>
+                    </h3>
+                    <div class="version-description">
+                        Sprawdzona i niezawodna wersja z pełnym zestawem funkcji do profesjonalnego przetwarzania zdjęć.
+                    </div>
+                    <div class="features-list">
+                        <ul>
+                            <li>Przetwarzanie do 250 plików jednocześnie</li>
+                            <li>Zaawansowane ustawienia jakości i rozmiaru</li>
+                            <li>Zachowanie i sortowanie według dat EXIF</li>
+                            <li>Automatyczna rotacja według EXIF</li>
+                            <li>Różne formaty nazw plików</li>
+                            <li>Szczegółowe logi przetwarzania</li>
+                            <li>Walidacja przed przetwarzaniem</li>
+                        </ul>
+                    </div>
+                    <a href="klasyczna.html" class="version-btn">
+                        🚀 Uruchom Klasyczną
+                    </a>
+                </div>
+
+                <div class="version-card">
+                    <div class="version-icon">⚡</div>
+                    <h3 class="version-title">
+                        Wersja Progresywna
+                        <span class="badge recommended">Zalecana</span>
+                    </h3>
+                    <div class="version-description">
+                        Nowoczesna wersja z progresywnym przetwarzaniem i ulepszonymi funkcjami dla lepszej wydajności.
+                    </div>
+                    <div class="features-list">
+                        <ul>
+                            <li>Progresywne przetwarzanie z podglądem</li>
+                            <li>Szybsze przetwarzanie wsadowe</li>
+                            <li>Ulepszona obsługa błędów</li>
+                            <li>Modernizowany interfejs użytkownika</li>
+                            <li>Automatyczne optymalizacje</li>
+                            <li>Lepsze wsparcie dla urządzeń mobilnych</li>
+                            <li>Wszystkie funkcje wersji klasycznej</li>
+                        </ul>
+                    </div>
+                    <a href="progressive_simple_fix.html" class="version-btn progressive">
+                        ⚡ Uruchom Progresywną
+                    </a>
+                </div>
+            </div>
+
+            <div class="additional-info">
+                <h3>🔧 Narzędzia Dodatkowe</h3>
+                <p>Dostępne są również dodatkowe narzędzia diagnostyczne i konfiguracyjne.</p>
+                <a href="check.php" class="diagnostic-btn" target="_blank">
+                    🔍 Diagnostyka Systemu
+                </a>
+                <a href="status.php" class="diagnostic-btn" target="_blank">
+                    📊 Status Serwera
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sprawdź status serwera
+        async function checkServerStatus() {
+            const statusElement = document.getElementById('serverStatus');
+            
+            try {
+                const response = await fetch('check.php');
+                const data = await response.json();
+                
+                if (data.gd_available && data.exif_available) {
+                    statusElement.textContent = '✅ Serwer działa poprawnie';
+                    statusElement.className = 'server-status';
+                } else {
+                    statusElement.textContent = '⚠️ Serwer działa z ograniczeniami';
+                    statusElement.className = 'server-status error';
+                }
+            } catch (error) {
+                statusElement.textContent = '❌ Błąd połączenia z serwerem';
+                statusElement.className = 'server-status error';
+            }
+        }
+
+        // Animacja kart przy scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.version-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        }
+
+        // Inicjalizacja
+        window.addEventListener('load', () => {
+            checkServerStatus();
+            animateOnScroll();
+            
+            // Ukryj status po 5 sekundach jeśli wszystko OK
+            setTimeout(() => {
+                const statusElement = document.getElementById('serverStatus');
+                if (!statusElement.classList.contains('error')) {
+                    statusElement.style.opacity = '0';
+                    setTimeout(() => {
+                        statusElement.style.display = 'none';
+                    }, 300);
+                }
+            }, 5000);
+        });
+
+        // Dodaj efekt parallax dla tła
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = scrolled * 0.5;
+            document.body.style.backgroundPosition = `center ${parallax}px`;
+        });
+    </script>
+</body>
+</html>
