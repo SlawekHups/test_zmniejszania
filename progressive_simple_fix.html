@@ -447,6 +447,16 @@
         <div class="header">
             <h1>📸 Procesor Zdjęć - Progresywny</h1>
             <p>⚡ Poprawka ZIP - wszystkie pliki w jednym archiwum</p>
+            
+            <!-- Przyciski nawigacji -->
+            <div style="margin-top: 20px;">
+                <a href="/" style="background: #6c757d; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; margin: 0 10px; display: inline-block;">
+                    🏠 Powrót do strony głównej
+                </a>
+                <a href="klasyczna.html" style="background: #667eea; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; margin: 0 10px; display: inline-block;">
+                    🎯 Przejdź do wersji klasycznej
+                </a>
+            </div>
         </div>
 
         <div class="main-panel">
@@ -456,7 +466,7 @@
                     <div class="upload-icon">📤</div>
                     <h3>Przeciągnij i upuść zdjęcia tutaj</h3>
                     <p>lub kliknij aby wybrać pliki (JPG/JPEG)</p>
-                    <button class="select-btn" onclick="document.getElementById('fileInput').click()">
+                    <button class="select-btn" id="selectBtnProg">
                         Wybierz zdjęcia
                     </button>
                 </div>
@@ -625,8 +635,18 @@
             handleFiles(e.dataTransfer.files);
         });
 
-        dropZone.addEventListener('click', () => {
+        // Obsługa kliknięcia na przycisk wyboru plików
+        const selectBtnProg = document.getElementById('selectBtnProg');
+        selectBtnProg.addEventListener('click', () => {
             fileInput.click();
+        });
+
+        // Obsługa kliknięcia na strefę drop (ale nie na przycisk)
+        dropZone.addEventListener('click', (e) => {
+            // Nie rób nic jeśli kliknięto na przycisk (ma własną obsługę)
+            if (e.target.id !== 'selectBtnProg' && !e.target.closest('#selectBtnProg')) {
+                fileInput.click();
+            }
         });
 
         fileInput.addEventListener('change', (e) => {

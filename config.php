@@ -9,15 +9,15 @@
 // ===============================================
 
 function setupPHPLimits() {
-    // Limity dla dużej liczby plików (200+)
+    // Limity dla dużej liczby plików (300+)
     $limits = [
         'upload_max_filesize' => '100M',        // Maksymalny rozmiar pojedynczego pliku
-        'post_max_size' => '5000M',             // Maksymalny rozmiar całego POST (50 plików × 100MB)
-        'max_input_vars' => '5000',             // Maksymalna liczba zmiennych POST/GET
-        'max_execution_time' => '900',          // 15 minut na przetwarzanie
-        'memory_limit' => '2048M',              // 2GB pamięci
-        'max_input_time' => '900',              // 15 minut na upload
-        'default_socket_timeout' => '900'      // 15 minut timeout
+        'post_max_size' => '8000M',             // Maksymalny rozmiar całego POST (80 plików × 100MB)
+        'max_input_vars' => '8000',             // Maksymalna liczba zmiennych POST/GET
+        'max_execution_time' => '1200',         // 20 minut na przetwarzanie
+        'memory_limit' => '4096M',              // 4GB pamięci
+        'max_input_time' => '1200',             // 20 minut na upload
+        'default_socket_timeout' => '1200'     // 20 minut timeout
     ];
     
     $applied = [];
@@ -35,7 +35,7 @@ function setupPHPLimits() {
     // max_file_uploads nie może być zmieniony przez ini_set()
     // Musi być ustawiony w php.ini lub przez parametr -d przy uruchomieniu
     $applied['max_file_uploads'] = [
-        'requested' => '250',
+        'requested' => '350',
         'current' => ini_get('max_file_uploads'),
         'note' => 'Nie można zmienić przez ini_set() - wymaga -d przy starcie serwera'
     ];
@@ -64,11 +64,11 @@ class AppConfig {
     
     // Limity wydajności
     const PERFORMANCE_LIMITS = [
-        'recommended_batch_size' => 10,     // Zalecana liczba plików na raz
-        'max_safe_batch_size' => 50,       // Maksymalna bezpieczna liczba
-        'extreme_batch_size' => 200,       // Ekstremalny limit
-        'processing_timeout' => 900,       // Timeout przetwarzania (15 min)
-        'cleanup_delay' => 1800            // Opóźnienie czyszczenia (30 min)
+        'recommended_batch_size' => 15,     // Zalecana liczba plików na raz
+        'max_safe_batch_size' => 75,       // Maksymalna bezpieczna liczba
+        'extreme_batch_size' => 300,       // Ekstremalny limit (zwiększony do 300)
+        'processing_timeout' => 1200,      // Timeout przetwarzania (20 min)
+        'cleanup_delay' => 2400            // Opóźnienie czyszczenia (40 min)
     ];
     
     // Ścieżki aplikacji

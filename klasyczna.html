@@ -393,11 +393,21 @@
         </div>
 
         <div class="main-content">
+            <!-- Przyciski nawigacji -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <a href="/" class="upload-btn" style="background: #6c757d; margin-right: 10px; text-decoration: none; display: inline-block;">
+                    🏠 Powrót do strony głównej
+                </a>
+                <a href="progressive_simple_fix.html" class="upload-btn" style="background: #28a745; text-decoration: none; display: inline-block;">
+                    ⚡ Przejdź do wersji progresywnej
+                </a>
+            </div>
+
             <div class="upload-section" id="uploadSection">
                 <div class="upload-icon">📁</div>
                 <div class="upload-text">Przeciągnij i upuść zdjęcia tutaj lub kliknij aby wybrać</div>
                 <input type="file" id="fileInput" class="file-input" multiple accept="image/jpeg,image/jpg">
-                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                <button class="upload-btn" id="selectBtn">
                     Wybierz zdjęcia
                 </button>
             </div>
@@ -543,8 +553,18 @@
             handleFiles(e.dataTransfer.files);
         });
 
-        uploadSection.addEventListener('click', () => {
+        // Obsługa kliknięcia na przycisk wyboru plików
+        const selectBtn = document.getElementById('selectBtn');
+        selectBtn.addEventListener('click', () => {
             fileInput.click();
+        });
+
+        // Obsługa kliknięcia na sekcję upload (ale nie na przycisk)
+        uploadSection.addEventListener('click', (e) => {
+            // Nie rób nic jeśli kliknięto na przycisk (ma własną obsługę)
+            if (e.target.id !== 'selectBtn' && !e.target.closest('#selectBtn')) {
+                fileInput.click();
+            }
         });
 
         fileInput.addEventListener('change', (e) => {

@@ -21,13 +21,13 @@ fi
 echo "✅ Uruchamianie serwera z automatycznymi limitami PHP..."
 
 # Uruchom serwer z parametrami -d (max_file_uploads nie można zmienić przez ini_set)
-php -d max_file_uploads=250 \
+php -d max_file_uploads=350 \
     -d upload_max_filesize=100M \
-    -d post_max_size=5000M \
-    -d max_input_vars=5000 \
-    -d max_execution_time=900 \
-    -d memory_limit=2048M \
-    -d max_input_time=900 \
+    -d post_max_size=8000M \
+    -d max_input_vars=8000 \
+    -d max_execution_time=1200 \
+    -d memory_limit=4096M \
+    -d max_input_time=1200 \
     -S localhost:8000 server_200.php > server.log 2>&1 &
 
 # Poczekaj na uruchomienie
