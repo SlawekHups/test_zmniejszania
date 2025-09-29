@@ -871,12 +871,26 @@
             const fileCount = selectedFiles.length;
             
             let currentProgress = 0;
-            const maxProgress = 95; // Nie dochodzimy do 100% żeby pokazać że się jeszcze przetwarza
-            const stepTime = Math.max(100, (15000 / fileCount)); // Rozłóż na ~15 sekund
+            const maxProgress = 90; // Zatrzymaj na 90% żeby pokazać że się przetwarza
+            
+            // Minimum 3 sekundy, maksimum 8 sekund niezależnie od liczby plików
+            const totalTime = Math.min(8000, Math.max(3000, fileCount * 100));
+            const steps = 30; // 30 kroków animacji
+            const stepTime = totalTime / steps;
+            const incrementPerStep = maxProgress / steps;
+            
+            // Natychmiast pokaż 10% żeby było widać że coś się dzieje
+            currentProgress = 10;
+            progressFill.style.width = currentProgress + '%';
+            progressPercentage.textContent = Math.round(currentProgress) + '%';
+            progressText.textContent = 'Przygotowywanie plików...';
             
             const progressInterval = setInterval(() => {
                 if (currentProgress < maxProgress) {
-                    currentProgress += Math.random() * 3 + 1; // Losowy przyrost 1-4%
+                    // Dodaj losowość ale kontroluj maksymalny przyrost
+                    const randomIncrement = incrementPerStep * (0.7 + Math.random() * 0.6); // 70%-130% normalnego przyrostu
+                    currentProgress += randomIncrement;
+                    
                     if (currentProgress > maxProgress) currentProgress = maxProgress;
                     
                     progressFill.style.width = currentProgress + '%';
@@ -889,7 +903,7 @@
                         progressText.textContent = 'Zmniejszanie zdjęć...';
                     } else if (currentProgress < 75) {
                         progressText.textContent = 'Optymalizacja jakości...';
-                    } else if (currentProgress < 90) {
+                    } else if (currentProgress < 85) {
                         progressText.textContent = 'Zapisywanie wyników...';
                     } else {
                         progressText.textContent = 'Finalizowanie...';

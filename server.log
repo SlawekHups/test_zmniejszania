@@ -369,3 +369,47 @@
 [Mon Sep 29 15:10:46 2025] 127.0.0.1:53254 Accepted
 [Mon Sep 29 15:10:46 2025] 127.0.0.1:53254 [200]: GET /check.php?legacy=1
 [Mon Sep 29 15:10:46 2025] 127.0.0.1:53254 Closing
+[Mon Sep 29 15:17:24 2025] 127.0.0.1:53386 Accepted
+[Mon Sep 29 15:17:24 2025] 127.0.0.1:53386 [200]: GET /
+[Mon Sep 29 15:17:24 2025] 127.0.0.1:53388 Accepted
+[Mon Sep 29 15:17:24 2025] 127.0.0.1:53386 Closing
+[Mon Sep 29 15:17:25 2025] 127.0.0.1:53388 Closing
+[Mon Sep 29 15:17:25 2025] 127.0.0.1:53390 Accepted
+[Mon Sep 29 15:17:25 2025] 127.0.0.1:53390 [200]: GET /check.php?legacy=1
+[Mon Sep 29 15:17:25 2025] 127.0.0.1:53390 Closing
+[Mon Sep 29 15:35:45 2025] 127.0.0.1:53684 Accepted
+[Mon Sep 29 15:35:45 2025] 127.0.0.1:53684 [200]: GET /klasyczna.html
+[Mon Sep 29 15:35:45 2025] 127.0.0.1:53684 Closing
+[Mon Sep 29 15:36:15 2025] 127.0.0.1:53705 Accepted
+[Mon Sep 29 15:36:15 2025] 127.0.0.1:53707 Accepted
+[Mon Sep 29 15:36:15 2025] 127.0.0.1:53705 [200]: GET /
+[Mon Sep 29 15:36:15 2025] 127.0.0.1:53705 Closing
+[Mon Sep 29 15:36:15 2025] 127.0.0.1:53707 Closing
+[Mon Sep 29 15:36:15 2025] 127.0.0.1:53709 Accepted
+[Mon Sep 29 15:36:15 2025] 127.0.0.1:53709 [200]: GET /check.php?legacy=1
+[Mon Sep 29 15:36:15 2025] 127.0.0.1:53709 Closing
+[Mon Sep 29 15:36:16 2025] 127.0.0.1:53711 Accepted
+[Mon Sep 29 15:36:16 2025] 127.0.0.1:53711 [200]: GET /klasyczna.html
+[Mon Sep 29 15:36:16 2025] 127.0.0.1:53711 Closing
+[Mon Sep 29 15:36:16 2025] 127.0.0.1:53714 Accepted
+[Mon Sep 29 15:36:16 2025] 127.0.0.1:53715 Accepted
+[Mon Sep 29 15:36:16 2025] 127.0.0.1:53714 Closing
+[Mon Sep 29 15:36:16 2025] 127.0.0.1:53715 [200]: GET /check.php?legacy=1
+[Mon Sep 29 15:36:16 2025] 127.0.0.1:53715 Closing
+[Mon Sep 29 15:36:26 2025] 127.0.0.1:53734 Accepted
+[Mon Sep 29 15:36:26 2025] 127.0.0.1:53734 [200]: POST /validate_capacity.php
+[Mon Sep 29 15:36:26 2025] 127.0.0.1:53734 Closing
+[Mon Sep 29 15:36:27 2025] 127.0.0.1:53738 Accepted
+[Mon Sep 29 15:36:29 2025] 127.0.0.1:53738 [200]: POST /process.php
+[Mon Sep 29 15:36:29 2025] 127.0.0.1:53738 Closing
+[Mon Sep 29 15:36:35 2025] 127.0.0.1:53740 Accepted
+[Mon Sep 29 15:36:35 2025] 127.0.0.1:53740 [200]: GET /progressive_simple_fix.html
+[Mon Sep 29 15:36:35 2025] 127.0.0.1:53742 Accepted
+[Mon Sep 29 15:36:35 2025] 127.0.0.1:53740 Closing
+[Mon Sep 29 15:36:35 2025] 127.0.0.1:53742 Closing
+[Mon Sep 29 15:36:44 2025] 127.0.0.1:53753 Accepted
+[Mon Sep 29 15:36:44 2025] 127.0.0.1:53753 [200]: POST /validate_capacity.php
+[Mon Sep 29 15:36:44 2025] 127.0.0.1:53753 Closing
+[Mon Sep 29 15:36:45 2025] 127.0.0.1:53755 Accepted
+[Mon Sep 29 15:36:48 2025] 127.0.0.1:53755 [200]: POST /process.php
+[Mon Sep 29 15:36:48 2025] 127.0.0.1:53755 Closing

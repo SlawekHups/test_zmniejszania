@@ -1135,13 +1135,47 @@
             const percent = processingStats.total > 0 ? (completed / processingStats.total) * 100 : 0;
             const percentRounded = Math.round(percent);
             
-            overallProgressFill.style.width = percent + '%';
-            
-            // Aktualizuj procenty
+            // Animacja płynna dla lepszej widoczności
             const overallProgressPercentage = document.getElementById('overallProgressPercentage');
-            if (overallProgressPercentage) {
-                overallProgressPercentage.textContent = percentRounded + '%';
+            const currentWidth = parseFloat(overallProgressFill.style.width) || 0;
+            
+            if (percent > currentWidth) {
+                // Animuj od aktualnej pozycji do docelowej
+                animateProgressTo(currentWidth, percent);
+            } else {
+                // Bezpośrednia aktualizacja przy cofaniu się
+                overallProgressFill.style.width = percent + '%';
+                if (overallProgressPercentage) {
+                    overallProgressPercentage.textContent = percentRounded + '%';
+                }
             }
+        }
+        
+        // Animacja postępu dla lepszej widoczności
+        function animateProgressTo(fromPercent, toPercent) {
+            const overallProgressPercentage = document.getElementById('overallProgressPercentage');
+            const duration = Math.min(1000, Math.max(300, (toPercent - fromPercent) * 50)); // 300ms-1s
+            const steps = 20;
+            const stepTime = duration / steps;
+            const increment = (toPercent - fromPercent) / steps;
+            
+            let currentPercent = fromPercent;
+            let step = 0;
+            
+            const animationInterval = setInterval(() => {
+                step++;
+                currentPercent += increment;
+                
+                if (step >= steps || currentPercent >= toPercent) {
+                    currentPercent = toPercent;
+                    clearInterval(animationInterval);
+                }
+                
+                overallProgressFill.style.width = currentPercent + '%';
+                if (overallProgressPercentage) {
+                    overallProgressPercentage.textContent = Math.round(currentPercent) + '%';
+                }
+            }, stepTime);
         }
 
         // Show Final Results
