@@ -40,7 +40,11 @@ Nowoczesna aplikacja webowa do konwersji, zmniejszania i optymalizacji zdjęć J
    ```bash
    ./start.sh
    ```
-3. Otwórz aplikację w przeglądarce:
+3. Zatrzymaj serwer (gdy skończysz pracę):
+   ```bash
+   ./stop.sh
+   ```
+4. Otwórz aplikację w przeglądarce:
    - **🏠 Strona główna**: http://localhost:8000/
    - **📱 Klasyczna**: http://localhost:8000/klasyczna.html
    - **⚡ Progresywna**: http://localhost:8000/progressive_simple_fix.html
@@ -52,6 +56,21 @@ Skrypt `start.sh` automatycznie:
 - ✅ Uruchamia nowy serwer z limitami PHP przez parametry `-d`
 - ✅ Sprawdza czy serwer działa poprawnie
 - ✅ Wyświetla aktualne limity i dostępne aplikacje
+
+### Zarządzanie serwerem
+```bash
+# Uruchom serwer
+./start.sh
+
+# Zatrzymaj serwer
+./stop.sh
+
+# Sprawdź czy serwer działa
+lsof -i :8000
+
+# Zobacz logi serwera
+tail -f server.log
+```
 
 ## 📋 Instrukcja użytkowania
 
@@ -180,7 +199,8 @@ Przed każdym przetwarzaniem system sprawdza:
 - **`config.php`** - Centralna konfiguracja (limity PHP, ustawienia aplikacji)
 - **`logger.php`** - System szczegółowego logowania
 - **`server_200.php`** - Router dla PHP Development Server
-- **`start.sh`** - Uniwersalny skrypt startowy serwera
+- **`start.sh`** - Skrypt uruchamiający serwer z automatycznymi limitami
+- **`stop.sh`** - Skrypt zatrzymujący serwer bezpiecznie
 - **`check.php`** - Sprawdzenie dostępności rozszerzeń i limitów PHP
 - **`status.php`** - Status sesji przetwarzania
 
